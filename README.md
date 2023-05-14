@@ -5,5 +5,6 @@ My personal blog using issues and GitHub Actions (随意转载，无需署名)
 | Name | Link | Desc | 
  | ---- | ---- | ---- |
 ## 最近更新
-- [我的第二篇博客](https://github.com/Equuuu/Equ_Blog/issues/2)--2023-05-14
-- [我的第一篇博客](https://github.com/Equuuu/Equ_Blog/issues/1)--2023-05-14
+- [你好，小摩羯](https://github.com/Equuuu/Equ_Blog/issues/3)--2023-05-14
+## 2023年
+- [你好，小摩羯](https://github.com/Equuuu/Equ_Blog/issues/3)--2023-05-14
