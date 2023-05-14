@@ -5,6 +5,6 @@ My personal blog using issues and GitHub Actions
 | Name | Link | Desc | 
  | ---- | ---- | ---- |
 ## 最近更新
-- [你好，小摩羯](https://github.com/Equuuu/Equ_Blog/issues/3)--2023-05-14
+- [Iv，请告诉我，天尽头，何处有香丘](https://github.com/Equuuu/Equ_Blog/issues/4)--2023-05-14
 ## 2023年
-- [你好，小摩羯](https://github.com/Equuuu/Equ_Blog/issues/3)--2023-05-14
+- [Iv，请告诉我，天尽头，何处有香丘](https://github.com/Equuuu/Equ_Blog/issues/4)--2023-05-14
