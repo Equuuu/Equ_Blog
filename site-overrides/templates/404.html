@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block title %}Not found · {{ config.title }}{% endblock title %}
+
+{% block content %}
+<section class="archive-page">
+  <p class="eyebrow">404</p>
+  <h1>页面没有找到</h1>
+  <p class="hero-text">这条小径暂时还没有文章。</p>
+  <a class="button button-primary" href="{{ config.base_url }}/">回到首页</a>
+</section>
+{% endblock content %}

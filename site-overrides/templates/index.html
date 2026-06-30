@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block title %}{{ config.title }}{% endblock title %}
+
+{% block content %}
+<section class="hero">
+  <div class="hero-copy">
+    <p class="eyebrow">Digital garden / notes / essays</p>
+    <h1>把短暂而明亮的事物写下来。</h1>
+    <p class="hero-text">这里整理阅读、生活、技术和日常观察。像一间安静的小书房，也像一片慢慢生长的花园。</p>
+    <div class="hero-actions">
+      <a class="button button-primary" href="#latest">阅读最近更新</a>
+      <a class="button" href="{{ config.base_url }}/tags/">浏览标签</a>
+    </div>
+  </div>
+  <aside class="hero-panel" aria-label="Blog summary">
+    <span class="panel-kicker">Archive</span>
+    <strong>{{ paginator.pages | length }}</strong>
+    <span>篇公开记录</span>
+    <div class="theme-list">
+      <span>阅读</span>
+      <span>生活</span>
+      <span>技术</span>
+      <span>花园</span>
+    </div>
+  </aside>
+</section>
+
+<section class="section-block" id="latest">
+  <div class="section-heading">
+    <p>Latest</p>
+    <h2>最近更新</h2>
+  </div>
+  <div class="post-list">
+    {% for page in paginator.pages %}
+      {% if loop.index <= 6 %}
+        <article class="post-card">
+          <div>
+            <a class="post-title" href="{{ page.permalink }}">{{ page.title }}</a>
+            {% if page.taxonomies.tags %}
+              <div class="post-tags">
+                {% for tag in page.taxonomies.tags %}
+                  <span>{{ tag }}</span>
+                {% endfor %}
+              </div>
+            {% endif %}
+          </div>
+          <time datetime="{{ page.date }}">{{ page.date | date(format="%Y-%m-%d") }}</time>
+        </article>
+      {% endif %}
+    {% else %}
+      <p class="empty">还没有文章。</p>
+    {% endfor %}
+  </div>
+</section>
+
+<section class="section-block about-block">
+  <div class="section-heading">
+    <p>About</p>
+    <h2>关于这里</h2>
+  </div>
+  <p>这个博客由 GitHub Issues 自动生成。文字可以很日常，也可以很技术；重要的是把当下看见、读到、想到的东西留在一个干净的地方。</p>
+</section>
+{% endblock content %}

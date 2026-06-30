@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title %}{{ page.title }} · {{ config.title }}{% endblock title %}
+
+{% block content %}
+<article class="article">
+  <header class="article-header">
+    <a class="back-link" href="{{ config.base_url }}/">← Home</a>
+    <h1>{{ page.title }}</h1>
+    <div class="article-meta">
+      <time datetime="{{ page.date }}">{{ page.date | date(format="%Y-%m-%d") }}</time>
+      {% if page.taxonomies.tags %}
+        <span>/</span>
+        {% for tag in page.taxonomies.tags %}
+          <a href="{{ get_taxonomy_url(kind='tags', name=tag) }}">{{ tag }}</a>
+        {% endfor %}
+      {% endif %}
+    </div>
+  </header>
+
+  <div class="article-content">
+    {{ page.content | safe }}
+  </div>
+
+  {% if page.extra.issue_url %}
+    <p class="issue-link">
+      <a href="{{ page.extra.issue_url }}">在 GitHub Issue 中查看原文</a>
+    </p>
+  {% endif %}
+</article>
+{% endblock content %}

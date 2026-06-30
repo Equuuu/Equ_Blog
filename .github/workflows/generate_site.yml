@@ -1,6 +1,12 @@
 name: Deploy static content to Pages
 
 on:
+  push:
+    branches:
+      - main
+    paths:
+      - "site-overrides/**"
+      - ".github/workflows/generate_site.yml"
   issues:
     types:
       - opened
@@ -42,6 +48,7 @@ jobs:
           gh release download $ISITE_VERSION --repo kemingy/isite -p '*Linux_x86_64*' --output isite.tar.gz
           tar zxf isite.tar.gz && mv isite /usr/local/bin
           isite generate --user $USER --repo $REPO
+          cp -R site-overrides/. output/
           gh release download $ZOLA_VERSION --repo getzola/zola -p '*linux*' --output zola.tar.gz
           tar zxf zola.tar.gz && mv zola /usr/local/bin
           cd output && zola build --base-url $BASE_URL
