@@ -9,9 +9,21 @@ from github import Github
 from lxml.etree import CDATA
 from marko.ext.gfm import gfm as marko
 
-MD_HEAD = """## [Gitblog](https://yihong0618.github.io/gitblog/)
-My personal blog([About Me](https://github.com/Equuuu/Equ_Blog)) using issues and GitHub Actions (彷佛像水面泡沫的短暂光亮)
-[RSS Feed](https://raw.githubusercontent.com/{repo_name}/master/feed.xml)
+DEFAULT_BRANCH = "main"
+
+MD_HEAD = """<div align="center">
+
+# Equ's Garden
+
+彷佛像水面泡沫的短暂光亮。
+
+[最近更新](#最近更新) · [读书笔记](#读书笔记) · [RSS Feed](https://raw.githubusercontent.com/{repo_name}/{branch}/feed.xml) · [GitHub](https://github.com/{repo_name})
+
+</div>
+
+---
+
+这里记录阅读、生活、技术、花园，以及一些短暂但明亮的东西。文章来自 GitHub Issues，并由 GitHub Actions 自动整理。
 """
 
 BACKUP_DIR = "BACKUP"
@@ -121,7 +133,7 @@ def get_issues_from_label(repo, label):
 
 def add_issue_info(issue, md):
     time = format_time(issue.created_at)
-    md.write(f"- [{issue.title}]({issue.html_url})--{time}\n")
+    md.write(f"- [{issue.title}]({issue.html_url}) · {time}\n")
 
 
 def add_md_todo(repo, md, me):
@@ -129,14 +141,13 @@ def add_md_todo(repo, md, me):
     if not TODO_ISSUES_LABELS or not todo_issues:
         return
     with open(md, "a+", encoding="utf-8") as md:
-        md.write("## TODO\n")
+        md.write("\n## TODO\n\n")
         for issue in todo_issues:
             if is_me(issue, me):
                 todo_title, todo_list = parse_TODO(issue)
                 md.write("TODO list from " + todo_title + "\n")
                 for t in todo_list:
                     md.write(t + "\n")
-                # new line
                 md.write("\n")
 
 
@@ -145,10 +156,11 @@ def add_md_top(repo, md, me):
     if not TOP_ISSUES_LABELS or not top_issues:
         return
     with open(md, "a+", encoding="utf-8") as md:
-        md.write("## 置顶文章\n")
+        md.write("\n## 置顶文章\n\n")
         for issue in top_issues:
             if is_me(issue, me):
                 add_issue_info(issue, md)
+        md.write("\n")
 
 
 def add_md_firends(repo, md, me):
@@ -157,7 +169,7 @@ def add_md_firends(repo, md, me):
     friends_issues = list(repo.get_issues(labels=FRIENDS_LABELS))
     if not FRIENDS_LABELS or not friends_issues:
         return
-    friends_issue_number = friends_issues[0].number
+    friends_issue_url = friends_issues[0].html_url
     for issue in friends_issues:
         for comment in issue.get_comments():
             if is_hearted_by_me(comment, me):
@@ -169,12 +181,12 @@ def add_md_firends(repo, md, me):
     s = markdown.markdown(s, output_format="html", extensions=["extra"])
     with open(md, "a+", encoding="utf-8") as md:
         md.write(
-            f"## [友情链接](https://github.com/{str(me)}/gitblog/issues/{friends_issue_number})\n"
+            f"\n## [友情链接]({friends_issue_url})\n\n"
         )
         md.write("<details><summary>显示</summary>\n")
         md.write(s)
         md.write("</details>\n")
-        md.write("\n\n")
+        md.write("\n")
 
 
 def add_md_recent(repo, md, me, limit=5):
@@ -182,20 +194,21 @@ def add_md_recent(repo, md, me, limit=5):
     with open(md, "a+", encoding="utf-8") as md:
         # one the issue that only one issue and delete (pyGitHub raise an exception)
         try:
-            md.write("## 最近更新\n")
+            md.write("\n## 最近更新\n\n")
             for issue in repo.get_issues():
                 if is_me(issue, me):
                     add_issue_info(issue, md)
                     count += 1
                     if count >= limit:
                         break
+            md.write("\n")
         except Exception as e:
             print(str(e))
 
 
 def add_md_header(md, repo_name):
     with open(md, "w", encoding="utf-8") as md:
-        md.write(MD_HEAD.format(repo_name=repo_name))
+        md.write(MD_HEAD.format(repo_name=repo_name, branch=DEFAULT_BRANCH))
         md.write("\n")
 
 
@@ -222,7 +235,7 @@ def add_md_label(repo, md, me):
 
             issues = get_issues_from_label(repo, label)
             if issues.totalCount:
-                md.write("## " + label.name + "\n")
+                md.write("\n## " + label.name + "\n\n")
                 issues = sorted(issues, key=lambda x: x.created_at, reverse=True)
             i = 0
             for issue in issues:
@@ -235,8 +248,7 @@ def add_md_label(repo, md, me):
                     add_issue_info(issue, md)
                     i += 1
             if i > ANCHOR_NUMBER:
-                md.write("</details>\n")
-                md.write("\n")
+                md.write("</details>\n\n")
 
 
 def get_to_generate_issues(repo, dir_name, issue_number=None):
@@ -263,7 +275,7 @@ def generate_rss_feed(repo, filename, me):
     )
     generator.link(href=repo.html_url)
     generator.link(
-        href=f"https://raw.githubusercontent.com/{repo.full_name}/master/{filename}",
+        href=f"https://raw.githubusercontent.com/{repo.full_name}/{DEFAULT_BRANCH}/{filename}",
         rel="self",
     )
     for issue in repo.get_issues():
