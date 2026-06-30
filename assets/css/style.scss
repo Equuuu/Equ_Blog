@@ -4,17 +4,18 @@
 @import "{{ site.theme }}";
 
 :root {
-  --page: #f7f8fa;
+  --page: #f5f7f8;
   --surface: #ffffff;
-  --ink: #20242a;
-  --muted: #667085;
-  --subtle: #98a2b3;
-  --accent: #2563eb;
-  --accent-hover: #1d4ed8;
-  --border: #e4e7ec;
-  --border-strong: #d0d5dd;
-  --code-bg: #f2f4f7;
-  --shadow: rgba(16, 24, 40, 0.06);
+  --ink: #1f2933;
+  --muted: #64707d;
+  --soft: #8b98a7;
+  --line: #e3e8ee;
+  --line-strong: #cbd5df;
+  --blue: #315f8f;
+  --green: #6f8f83;
+  --warm: #b68b59;
+  --code-bg: #f1f4f7;
+  --shadow: rgba(31, 41, 51, 0.06);
 }
 
 html {
@@ -23,22 +24,26 @@ html {
 
 body {
   min-height: 100vh;
-  background: var(--page);
+  background:
+    linear-gradient(180deg, #edf2f5 0, var(--page) 280px),
+    var(--page);
   color: var(--ink);
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans SC",
     "Microsoft YaHei", sans-serif;
-  line-height: 1.72;
+  line-height: 1.74;
 }
 
 .container-lg {
-  max-width: 860px;
-  margin-top: 40px !important;
-  margin-bottom: 40px !important;
-  padding: 48px !important;
+  max-width: 960px;
+  margin-top: 36px !important;
+  margin-right: auto !important;
+  margin-bottom: 48px !important;
+  margin-left: auto !important;
+  padding: 56px 64px !important;
   background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  box-shadow: 0 18px 48px var(--shadow);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  box-shadow: 0 20px 60px var(--shadow);
 }
 
 .markdown-body {
@@ -47,29 +52,90 @@ body {
 }
 
 .markdown-body .site-hero {
-  margin: 4px 0 28px;
-  text-align: left;
+  position: relative;
+  min-height: 280px;
+  padding: 4px 0 42px;
+  border-bottom: 1px solid var(--line);
 }
 
-.markdown-body .site-hero h1 {
-  margin: 0 0 10px;
+.markdown-body .site-hero::before {
+  content: "";
+  position: absolute;
+  top: 74px;
+  left: 0;
+  width: 48px;
+  height: 2px;
+  background: var(--warm);
 }
 
-.markdown-body .site-hero p {
-  margin: 0 0 18px;
-  color: var(--muted);
-  font-size: 17px;
+.markdown-body .site-nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 18px;
+  margin-bottom: 58px;
 }
 
-.markdown-body .site-hero a {
+.markdown-body .site-nav a {
   color: var(--muted);
   font-size: 14px;
   font-weight: 500;
   text-decoration: none;
 }
 
-.markdown-body .site-hero a:hover {
-  color: var(--accent);
+.markdown-body .site-nav a:hover {
+  color: var(--blue);
+}
+
+.markdown-body .site-kicker {
+  margin: 0 0 14px;
+  color: var(--green);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.markdown-body .site-hero h1 {
+  max-width: 720px;
+  margin: 0;
+  padding: 0;
+  color: var(--ink);
+  border: 0;
+  font-size: 56px;
+  font-weight: 750;
+  letter-spacing: 0;
+  line-height: 1.04;
+}
+
+.markdown-body .site-subtitle {
+  max-width: 620px;
+  margin: 20px 0 24px;
+  color: var(--muted);
+  font-size: 19px;
+  line-height: 1.7;
+}
+
+.markdown-body .site-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.markdown-body .site-tags span {
+  padding: 4px 10px;
+  color: var(--muted);
+  font-size: 13px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: #fafbfc;
+}
+
+.markdown-body .site-intro {
+  max-width: 680px;
+  margin: 28px 0 8px;
+  color: var(--muted);
+  font-size: 16px;
 }
 
 .markdown-body h1,
@@ -84,31 +150,32 @@ body {
 .markdown-body h1 {
   padding-bottom: 0;
   border-bottom: 0;
-  font-size: 40px;
-  line-height: 1.12;
+  font-size: 42px;
+  line-height: 1.16;
 }
 
 .markdown-body h2 {
   display: flex;
   align-items: center;
-  gap: 12px;
-  margin-top: 44px;
-  margin-bottom: 14px;
+  gap: 14px;
+  margin-top: 52px;
+  margin-bottom: 10px;
   padding-bottom: 0;
+  color: var(--ink);
   border-bottom: 0;
-  font-size: 20px;
-  line-height: 1.35;
+  font-size: 21px;
+  line-height: 1.4;
 }
 
 .markdown-body h2::after {
   content: "";
   flex: 1;
   height: 1px;
-  background: var(--border);
+  background: var(--line);
 }
 
 .markdown-body h3 {
-  margin-top: 28px;
+  margin-top: 30px;
   font-size: 17px;
 }
 
@@ -117,23 +184,47 @@ body {
 }
 
 .markdown-body hr {
-  height: 1px;
-  margin: 30px 0;
-  background: var(--border);
-  border: 0;
+  display: none;
 }
 
 .markdown-body a {
-  color: var(--accent);
-  text-decoration-color: rgba(37, 99, 235, 0.24);
+  color: var(--blue);
+  text-decoration-color: rgba(49, 95, 143, 0.26);
   text-underline-offset: 0.18em;
   transition: color 0.16s ease, border-color 0.16s ease,
     background-color 0.16s ease, text-decoration-color 0.16s ease;
 }
 
 .markdown-body a:hover {
-  color: var(--accent-hover);
-  text-decoration-color: rgba(29, 78, 216, 0.48);
+  color: #244b75;
+  text-decoration-color: rgba(36, 75, 117, 0.52);
+}
+
+.markdown-body .post-item {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 20px;
+  align-items: baseline;
+  padding: 18px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.markdown-body .post-title {
+  color: var(--ink);
+  font-size: 17px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.markdown-body .post-title:hover {
+  color: var(--blue);
+}
+
+.markdown-body .post-date {
+  color: var(--soft);
+  font-size: 14px;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
 }
 
 .markdown-body ul {
@@ -145,10 +236,10 @@ body {
   align-items: baseline;
   gap: 10px;
   margin: 0;
-  padding: 13px 0;
-  color: var(--subtle);
+  padding: 12px 0;
+  color: var(--soft);
   list-style: none;
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid var(--line);
 }
 
 .markdown-body li::before {
@@ -156,8 +247,8 @@ body {
   flex: 0 0 5px;
   width: 5px;
   height: 5px;
-  margin-top: 0.7em;
-  background: var(--border-strong);
+  margin-top: 0.72em;
+  background: var(--line-strong);
   border-radius: 50%;
 }
 
@@ -168,34 +259,34 @@ body {
 }
 
 .markdown-body li a:hover {
-  color: var(--accent);
+  color: var(--blue);
 }
 
 .markdown-body blockquote {
-  margin: 20px 0;
+  margin: 22px 0;
   padding: 2px 18px;
   color: var(--muted);
-  background: #f9fafb;
-  border-left: 3px solid var(--border-strong);
+  background: #f8fafb;
+  border-left: 3px solid var(--green);
   border-radius: 0 6px 6px 0;
 }
 
 .markdown-body code,
 .markdown-body tt {
   padding: 0.18em 0.38em;
-  color: #344054;
+  color: #394756;
   background: var(--code-bg);
   border-radius: 5px;
 }
 
 .markdown-body pre {
   padding: 16px;
-  background: #101828;
+  background: #17212c;
   border-radius: 8px;
 }
 
 .markdown-body pre code {
-  color: #f9fafb;
+  color: #f6f8fa;
   background: transparent;
 }
 
@@ -203,30 +294,31 @@ body {
   display: table;
   width: 100%;
   overflow: hidden;
-  border: 1px solid var(--border);
+  border: 1px solid var(--line);
   border-radius: 8px;
 }
 
 .markdown-body table th,
 .markdown-body table td {
   padding: 10px 12px;
-  border-color: var(--border);
+  border-color: var(--line);
 }
 
 .markdown-body table tr {
   background: var(--surface);
-  border-top-color: var(--border);
+  border-top-color: var(--line);
 }
 
 .markdown-body table tr:nth-child(2n) {
-  background: #f9fafb;
+  background: #f8fafb;
 }
 
 .markdown-body details {
-  margin: 16px 0;
+  margin: 18px 0;
   padding: 12px 14px;
-  border: 1px solid var(--border);
+  border: 1px solid var(--line);
   border-radius: 8px;
+  background: #fcfdfe;
 }
 
 .markdown-body summary {
@@ -240,8 +332,8 @@ body {
 }
 
 .footer {
-  color: var(--subtle) !important;
-  border-top-color: var(--border) !important;
+  color: var(--soft) !important;
+  border-top-color: var(--line) !important;
 }
 
 @media (max-width: 720px) {
@@ -251,7 +343,7 @@ body {
 
   .container-lg {
     margin: 0 !important;
-    padding: 28px 20px !important;
+    padding: 30px 20px !important;
     border: 0;
     border-radius: 0;
     box-shadow: none;
@@ -261,21 +353,42 @@ body {
     font-size: 15.5px;
   }
 
+  .markdown-body .site-hero {
+    min-height: auto;
+    padding-bottom: 32px;
+  }
+
+  .markdown-body .site-hero::before {
+    top: 68px;
+    width: 38px;
+  }
+
+  .markdown-body .site-nav {
+    justify-content: flex-start;
+    gap: 14px;
+    margin-bottom: 48px;
+  }
+
+  .markdown-body .site-hero h1 {
+    font-size: 38px;
+  }
+
+  .markdown-body .site-subtitle {
+    font-size: 16px;
+  }
+
   .markdown-body h1 {
     font-size: 32px;
   }
 
   .markdown-body h2 {
-    margin-top: 36px;
+    margin-top: 38px;
     font-size: 18px;
   }
 
-  .markdown-body .site-hero p {
-    font-size: 16px;
-  }
-
-  .markdown-body li {
-    gap: 9px;
-    padding: 12px 0;
+  .markdown-body .post-item {
+    grid-template-columns: 1fr;
+    gap: 4px;
+    padding: 15px 0;
   }
 }
