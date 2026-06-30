@@ -1,16 +1,16 @@
-<div align="center">
+<div class="site-hero" markdown="1">
 
-# Dear Yoko
+# Equ's Blog
 
-彷佛像水面泡沫的短暂光亮。
+阅读、生活、技术与一些短暂但明亮的记录。
 
-[最近更新](#最近更新) · [读书笔记](#读书笔记) · [RSS Feed](https://raw.githubusercontent.com/Equuuu/Equ_Blog/main/feed.xml) · [GitHub](https://github.com/Equuuu/Equ_Blog)
+[最近更新](#最近更新) · [读书笔记](#读书笔记) · [RSS](https://raw.githubusercontent.com/Equuuu/Equ_Blog/main/feed.xml) · [GitHub](https://github.com/Equuuu/Equ_Blog)
 
 </div>
 
 ---
 
-这里记录阅读、生活、技术、我们曾种植的蜀葵，以及一些短暂但明亮的东西。
+这里整理阅读、生活、技术和日常观察。文章来自 GitHub Issues，并由 GitHub Actions 自动归档。
 
 
 ## 最近更新

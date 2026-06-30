@@ -11,19 +11,19 @@ from marko.ext.gfm import gfm as marko
 
 DEFAULT_BRANCH = "main"
 
-MD_HEAD = """<div align="center">
+MD_HEAD = """<div class="site-hero" markdown="1">
 
-# Equ's Garden
+# Equ's Blog
 
-彷佛像水面泡沫的短暂光亮。
+阅读、生活、技术与一些短暂但明亮的记录。
 
-[最近更新](#最近更新) · [读书笔记](#读书笔记) · [RSS Feed](https://raw.githubusercontent.com/{repo_name}/{branch}/feed.xml) · [GitHub](https://github.com/{repo_name})
+[最近更新](#最近更新) · [读书笔记](#读书笔记) · [RSS](https://raw.githubusercontent.com/{repo_name}/{branch}/feed.xml) · [GitHub](https://github.com/{repo_name})
 
 </div>
 
 ---
 
-这里记录阅读、生活、技术、花园，以及一些短暂但明亮的东西。文章来自 GitHub Issues，并由 GitHub Actions 自动整理。
+这里整理阅读、生活、技术和日常观察。文章来自 GitHub Issues，并由 GitHub Actions 自动归档。
 """
 
 BACKUP_DIR = "BACKUP"
@@ -314,7 +314,7 @@ def save_issue(issue, me, dir_name=BACKUP_DIR):
     md_name = os.path.join(
         dir_name, f"{issue.number}_{issue.title.replace('/', '-').replace(' ', '.')}.md"
     )
-    with open(md_name, "w") as f:
+    with open(md_name, "w", encoding="utf-8") as f:
         f.write(f"# [{issue.title}]({issue.html_url})\n\n")
         f.write(issue.body or "")
         if issue.comments:
