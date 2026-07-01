@@ -30,9 +30,8 @@
 
   <footer class="article-footer">
     <a class="button" href="{{ config.base_url }}/">回到首页</a>
-    {% if page.extra.issue_url %}
-      <a class="issue-link" href="{{ page.extra.issue_url }}">在 GitHub Issue 中查看原文</a>
-    {% endif %}
+    {% set issue_number = page.slug | replace(from="issue-", to="") %}
+    <a class="issue-link" href="https://github.com/Equuuu/Equ_Blog/issues/{{ issue_number }}">在 GitHub Issue 中查看原文</a>
   </footer>
 </article>
 {% endblock content %}
