@@ -1,28 +1,37 @@
-<div align="center">
+<h1 align="center">Dear Yoko</h1>
 
-# Dear Yoko
+<p align="center">彷佛像水面泡沫的短暂光亮</p>
 
-仿佛像水面泡沫的短暂光亮。
+<p align="center">
+  <a href="#最近更新">最近更新</a> &nbsp;·&nbsp;
+  <a href="#生前所述">生前所述</a> &nbsp;·&nbsp;
+  <a href="#读书笔记">读书笔记</a> &nbsp;·&nbsp;
+  <a href="https://raw.githubusercontent.com/Equuuu/Equ_Blog/main/feed.xml">RSS</a> &nbsp;·&nbsp;
+  <a href="https://github.com/Equuuu">GitHub</a>
+</p>
 
-[最近更新](#最近更新) · [读书笔记](#读书笔记) · [RSS Feed](https://raw.githubusercontent.com/Equuuu/Equ_Blog/main/feed.xml) · [GitHub](https://github.com/Equuuu/Equ_Blog)
+<p align="center">Digital garden / notes / essays</p>
 
-</div>
+<p align="center">
+  <sub>阅读</sub> &nbsp;·&nbsp; <sub>生活</sub> &nbsp;·&nbsp; <sub>技术</sub> &nbsp;·&nbsp; <sub>花园</sub>
+</p>
+<p align="center">这里记录阅读、生活、技术、我们曾种植的蜀葵，以及一些短暂但明亮的东西。</p>
 
 ---
 
-这里记录阅读、生活、技术、我们曾种植的蜀葵，以及一些短暂但明亮的东西。
-
-
 ## 最近更新
 
-- [比特花园（蜀葵季）](https://github.com/Equuuu/Equ_Blog/issues/14) · 2024-05-08
-- [地球生存录](https://github.com/Equuuu/Equ_Blog/issues/4) · 2023-05-14
+- [比特花园（蜀葵季）](https://github.com/Equuuu/Equ_Blog/issues) · 2024-05-08
+- [地球生存录](https://github.com/Equuuu/Equ_Blog/issues) · 2023-05-14
 
+---
 
 ## 生前所述
 
-- [地球生存录](https://github.com/Equuuu/Equ_Blog/issues/4) · 2023-05-14
+- [地球生存录](https://github.com/Equuuu/Equ_Blog/issues) · 2023-05-14
+
+---
 
 ## 读书笔记
 
-- [比特花园（蜀葵季）](https://github.com/Equuuu/Equ_Blog/issues/14) · 2024-05-08
+- [比特花园（蜀葵季）](https://github.com/Equuuu/Equ_Blog/issues) · 2024-05-08
