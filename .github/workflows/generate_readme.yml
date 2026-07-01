@@ -3,7 +3,7 @@ name: Generate GitBlog README
 on:
   workflow_dispatch:
   issues:
-    types: [opened, edited]
+    types: [opened, edited, labeled, unlabeled, reopened, closed]
   issue_comment:
     types: [created, edited]
   push:
@@ -50,6 +50,6 @@ jobs:
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git add README.md feed.xml BACKUP/*.md issue-*/index.html
+          git add README.md feed.xml index.html BACKUP/*.md issue-*/index.html
           git commit -m 'update blog index' || echo "nothing to commit"
           git push || echo "nothing to push"

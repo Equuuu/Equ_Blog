@@ -10,6 +10,16 @@ from urllib.request import Request, urlopen
 
 
 API_ROOT = "https://api.github.com"
+HOME_ABOUT_TEXT = (
+    "这个博客由 GitHub Issues 自动整理。在这里我想留下这段话，宇宙如果放任不管，就会朝着散乱的方向发展，"
+    "而我们却通过修复身体、整理信息来对抗这个宇宙的法则，正是这种对抗让我们活了下来，而对抗的痕迹则以记忆、"
+    "文化和语言的形式残留在宇宙中，一切都朝着易碎而短暂的方向前进，然而人类却试图保存文化，留下爱与记忆。"
+    "你说生命是一场苦行，人类需要脱离自己的劣根性，潜在的欲望，自我隐约的虚荣，自以为是的高尚和成功，"
+    "探索内在的精神。去达到“神”的境界，选择和创造自己在乎的世界，并为这个“执念”而活，不需要过分地努力，"
+    "只需要融化进自己的身体中。一个无关欲望，无关时代，无关他人的“心愿 执念 风格”。你觉得人是为了一个执念活着的，"
+    "并因此经历生命的一切。至于它像什么，它像刺入灵魂的长长的柔软的钢筋，无意识地存在着，当不经意忘记和改变时，"
+    "会感到心碎和疼痛，于是它变成了神性。于是，我爱你。"
+)
 
 
 def request_json(url, token=None):
@@ -192,6 +202,142 @@ def render_static_issue(owner, repo, issue, comments):
 """
 
 
+def issue_labels(issue):
+    labels = [
+        label.get("name", "").strip()
+        for label in issue.get("labels", [])
+        if label.get("name", "").strip()
+    ]
+    return labels or ["未分类"]
+
+
+def render_static_home(owner, repo, issues):
+    visible_issues = [
+        issue for issue in issues
+        if "pull_request" not in issue
+    ]
+    visible_issues.sort(key=lambda item: item.get("created_at") or "", reverse=True)
+
+    grouped = {}
+    for issue in visible_issues:
+        for label in issue_labels(issue):
+            grouped.setdefault(label, []).append(issue)
+
+    group_parts = []
+    for label, group_issues in grouped.items():
+        cards = []
+        for issue in group_issues:
+            labels = issue_labels(issue)
+            title = issue.get("title") or f"Issue {issue['number']}"
+            date = format_date(issue.get("created_at"))
+            search_text = " ".join([title, *labels])
+            cards.append(
+                f"""            <article class="post-card" data-search="{html.escape(search_text)}">
+              <div>
+                <a class="post-title" href="issue-{issue['number']}/">{html.escape(title)}</a>
+              </div>
+              <time datetime="{date}">{date}</time>
+            </article>"""
+            )
+
+        group_parts.append(
+            f"""        <details class="post-group" data-group-search="{html.escape(label)}">
+          <summary class="post-group-summary">
+            <span class="post-group-title">{html.escape(label)}</span>
+            <span class="post-group-count">{len(group_issues)} 篇</span>
+          </summary>
+          <div class="post-list post-list-nested">
+{chr(10).join(cards)}
+          </div>
+        </details>"""
+        )
+
+    groups_html = "\n".join(group_parts) if group_parts else '        <p class="empty">还没有文章。</p>'
+
+    return f"""<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Equ's Blog</title>
+  <meta name="description" content="阅读、生活、技术与一些短暂但明亮的记录">
+  <link rel="stylesheet" href="assets/css/home.css">
+  <link rel="alternate" type="application/atom+xml" title="Equ's Blog" href="feed.xml">
+  <script defer src="assets/js/home.js"></script>
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="./">Equ</a>
+    <nav class="nav" aria-label="Primary navigation">
+      <a href="#latest">最近更新</a>
+      <a href="#about">关于</a>
+      <a href="feed.xml">RSS</a>
+      <a href="https://github.com/{html.escape(owner)}/{html.escape(repo)}">GitHub</a>
+    </nav>
+    <button class="theme-toggle" type="button" aria-label="切换深浅主题" aria-pressed="false">
+      <span class="theme-toggle-mark" aria-hidden="true">夜</span>
+      <span class="theme-toggle-label">夜间</span>
+    </button>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-copy">
+        <p class="eyebrow">Digital garden / notes / essays</p>
+        <h1>彷佛像水面泡沫的短暂光亮</h1>
+        <p class="hero-text">这里有小马的阅读、生活、技术和日常观察，以及曾经我们种植的蜀葵。</p>
+        <div class="hero-actions">
+          <a class="button button-primary" href="#latest">阅读最近更新</a>
+          <a class="button" href="https://github.com/{html.escape(owner)}/{html.escape(repo)}/issues">浏览 Issues</a>
+        </div>
+      </div>
+      <aside class="hero-panel" aria-label="Blog summary">
+        <span class="panel-kicker">Archive</span>
+        <strong>{len(visible_issues)}</strong>
+        <span>篇公开记录</span>
+        <div class="theme-list">
+          <span>阅读</span>
+          <span>生活</span>
+          <span>技术</span>
+          <span>花园</span>
+        </div>
+      </aside>
+    </section>
+
+    <section class="section-block" id="latest">
+      <div class="section-heading">
+        <p>Latest</p>
+      </div>
+      <div class="post-tools" aria-label="文章搜索">
+        <label class="search-field">
+          <span class="sr-only">搜索文章</span>
+          <input class="blog-search-input" type="search" placeholder="搜索文章、标签或关键词" autocomplete="off">
+        </label>
+        <button class="search-clear" type="button" hidden>清除</button>
+      </div>
+      <div class="post-groups">
+{groups_html}
+      </div>
+      <p class="search-empty" hidden>没有找到匹配的文章。</p>
+    </section>
+
+    <section class="section-block about-block" id="about">
+      <div class="section-heading">
+        <p>About</p>
+      </div>
+      <p>{html.escape(HOME_ABOUT_TEXT)}</p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <span>Equ's Blog</span>
+    <span>Notes from GitHub Issues.</span>
+  </footer>
+</body>
+</html>
+"""
+
+
 def write_issue_pages(owner, repo, output_dir, token=None, state="open", static_output_dir=None):
     issues_url = f"{API_ROOT}/repos/{owner}/{repo}/issues?state={state}"
     issues = collect_paginated(issues_url, token=token)
@@ -216,6 +362,12 @@ def write_issue_pages(owner, repo, output_dir, token=None, state="open", static_
                 encoding="utf-8",
             )
         written += 1
+
+    if static_output_path:
+        (static_output_path / "index.html").write_text(
+            render_static_home(owner, repo, issues),
+            encoding="utf-8",
+        )
 
     return written
 
