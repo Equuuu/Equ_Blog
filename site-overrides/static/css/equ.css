@@ -569,37 +569,78 @@ main {
   margin-top: 54px;
 }
 
+.archive-heading {
+  margin-bottom: 30px;
+}
+
 .archive-page h1 {
-  margin-bottom: 28px;
+  margin-bottom: 8px;
   font-size: clamp(2.6rem, 7vw, 5.2rem);
 }
 
-.tag-cloud {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-}
-
-.tag-cloud a {
-  display: inline-flex;
-  gap: 8px;
-  align-items: center;
-  padding: 10px 14px;
-  color: var(--ink);
-  border: 1px solid var(--line);
-  border-radius: 999px;
-  background: #faf7ef;
-  font-weight: 700;
-  text-decoration: none;
-}
-
-.tag-cloud a:hover {
-  color: var(--blue);
-  border-color: var(--blue);
-}
-
-.tag-cloud span {
+.archive-summary {
+  margin: 0;
   color: var(--soft);
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.tag-list {
+  display: grid;
+  gap: 0;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid var(--line);
+  counter-reset: tag-list;
+  list-style: none;
+}
+
+.tag-list li {
+  counter-increment: tag-list;
+  border-bottom: 1px solid var(--line);
+}
+
+.tag-list a {
+  display: grid;
+  grid-template-columns: 48px minmax(0, 1fr) auto;
+  gap: 18px;
+  align-items: center;
+  min-height: 72px;
+  padding: 16px 0;
+  color: var(--ink);
+  text-decoration: none;
+  transition: color 160ms ease;
+}
+
+.tag-list a:hover {
+  color: var(--blue);
+}
+
+.tag-list-number {
+  color: var(--soft);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 15px;
+  font-variant-numeric: tabular-nums;
+}
+
+.tag-list-number::before {
+  content: counter(tag-list, decimal-leading-zero);
+}
+
+.tag-list-name {
+  overflow-wrap: anywhere;
+  font-family: "Songti SC", "STSong", "Noto Serif SC", "Source Han Serif SC",
+    Georgia, serif;
+  font-size: clamp(1.45rem, 3.4vw, 2.45rem);
+  font-weight: 520;
+  line-height: 1.28;
+}
+
+.tag-list-count {
+  color: var(--soft);
+  font-size: 14px;
+  font-weight: 700;
+  white-space: nowrap;
 }
 
 .reading-article {
@@ -862,6 +903,17 @@ main {
   .post-card {
     grid-template-columns: 1fr;
     gap: 6px;
+  }
+
+  .tag-list a {
+    grid-template-columns: 36px minmax(0, 1fr);
+    gap: 12px;
+    min-height: 68px;
+  }
+
+  .tag-list-count {
+    grid-column: 2;
+    margin-top: -6px;
   }
 
   .site-footer {

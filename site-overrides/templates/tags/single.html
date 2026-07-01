@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}{{ term.name }} · {{ config.title }}{% endblock title %}
+
+{% block content %}
+<section class="archive-page">
+  <div class="archive-heading">
+    <p class="eyebrow">Tag</p>
+    <h1>{{ term.name }}</h1>
+    <p class="archive-summary">{{ term.pages | length }} 篇文章</p>
+  </div>
+  <div class="post-list">
+    {% for page in term.pages %}
+      <article class="post-card">
+        <div>
+          <a class="post-title" href="{{ page.permalink }}">{{ page.title }}</a>
+        </div>
+        <time datetime="{{ page.date }}">{{ page.date | date(format="%Y-%m-%d") }}</time>
+      </article>
+    {% endfor %}
+  </div>
+</section>
+{% endblock content %}
