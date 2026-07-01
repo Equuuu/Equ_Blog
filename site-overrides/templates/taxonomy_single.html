@@ -6,15 +6,13 @@
 <section class="archive-page">
   <p class="eyebrow">Tag</p>
   <h1>{{ term.name }}</h1>
-  <div class="post-list">
+  <ul class="post-list">
     {% for page in term.pages %}
-      <article class="post-card">
-        <div>
-          <a class="post-title" href="{{ page.permalink }}">{{ page.title }}</a>
-        </div>
+      <li>
+        <a href="{{ page.permalink }}">{{ page.title }}</a>
         <time datetime="{{ page.date }}">{{ page.date | date(format="%Y-%m-%d") }}</time>
-      </article>
+      </li>
     {% endfor %}
-  </div>
+  </ul>
 </section>
 {% endblock content %}

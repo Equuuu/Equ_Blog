@@ -11,25 +11,19 @@ from marko.ext.gfm import gfm as marko
 
 DEFAULT_BRANCH = "main"
 
-MD_HEAD = """<section class="site-hero">
-  <nav class="site-nav">
-    <a href="#最近更新">最近更新</a>
-    <a href="#读书笔记">读书笔记</a>
-    <a href="https://raw.githubusercontent.com/{repo_name}/{branch}/feed.xml">RSS</a>
-    <a href="https://github.com/{repo_name}">GitHub</a>
-  </nav>
-  <p class="site-kicker">Digital garden / notes / essays</p>
-  <h1>Equ's Blog</h1>
-  <p class="site-subtitle">阅读、生活、技术与一些短暂但明亮的记录。</p>
-  <div class="site-tags">
-    <span>阅读</span>
-    <span>生活</span>
-    <span>技术</span>
-    <span>花园</span>
-  </div>
-</section>
+MD_HEAD = """<div align="center">
 
-<p class="site-intro">这里整理阅读、生活、技术和日常观察。文章来自 GitHub Issues，并由 GitHub Actions 自动归档。</p>
+# Equ's Blog
+
+仿佛像水面泡沫的短暂光亮。
+
+[最近更新](#最近更新) · [读书笔记](#读书笔记) · [RSS Feed](https://raw.githubusercontent.com/{repo_name}/{branch}/feed.xml) · [GitHub](https://github.com/{repo_name})
+
+</div>
+
+---
+
+这里记录阅读、生活、技术、我们曾种植的蜀葵，以及一些短暂但明亮的东西。
 """
 
 BACKUP_DIR = "BACKUP"
@@ -140,10 +134,7 @@ def get_issues_from_label(repo, label):
 def add_issue_info(issue, md):
     time = format_time(issue.created_at)
     md.write(
-        f'<article class="post-item">'
-        f'<a class="post-title" href="{issue.html_url}">{issue.title}</a>'
-        f'<time class="post-date">{time}</time>'
-        f"</article>\n"
+        f"- [{issue.title}]({issue.html_url}) · {time}\n"
     )
 
 

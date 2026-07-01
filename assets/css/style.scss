@@ -4,18 +4,15 @@
 @import "{{ site.theme }}";
 
 :root {
-  --page: #f5f7f8;
+  --page: #f5f6f7;
   --surface: #ffffff;
-  --ink: #1f2933;
-  --muted: #64707d;
-  --soft: #8b98a7;
-  --line: #e3e8ee;
-  --line-strong: #cbd5df;
-  --blue: #315f8f;
-  --green: #6f8f83;
-  --warm: #b68b59;
-  --code-bg: #f1f4f7;
-  --shadow: rgba(31, 41, 51, 0.06);
+  --ink: #24292f;
+  --muted: #57606a;
+  --soft: #8c959f;
+  --line: #d8dee4;
+  --line-strong: #c7ced6;
+  --link: #2f6f9f;
+  --shadow: rgba(27, 31, 36, 0.06);
 }
 
 html {
@@ -24,118 +21,68 @@ html {
 
 body {
   min-height: 100vh;
-  background:
-    linear-gradient(180deg, #edf2f5 0, var(--page) 280px),
-    var(--page);
   color: var(--ink);
+  background: var(--page);
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans SC",
     "Microsoft YaHei", sans-serif;
-  line-height: 1.74;
+  line-height: 1.72;
 }
 
 .container-lg {
   max-width: 960px;
-  margin-top: 36px !important;
+  margin-top: 30px !important;
   margin-right: auto !important;
-  margin-bottom: 48px !important;
+  margin-bottom: 36px !important;
   margin-left: auto !important;
-  padding: 56px 64px !important;
+  padding: 58px 32px 34px !important;
   background: var(--surface);
   border: 1px solid var(--line);
-  border-radius: 10px;
-  box-shadow: 0 20px 60px var(--shadow);
+  border-radius: 8px;
+  box-shadow: 0 16px 42px var(--shadow);
 }
 
 .markdown-body {
+  max-width: 840px;
+  margin-right: auto;
+  margin-left: auto;
   color: var(--ink);
   font-size: 16px;
 }
 
-.markdown-body .site-hero {
-  position: relative;
-  min-height: 280px;
-  padding: 4px 0 42px;
-  border-bottom: 1px solid var(--line);
+.markdown-body > div[align="center"] {
+  margin-bottom: 26px;
 }
 
-.markdown-body .site-hero::before {
-  content: "";
-  position: absolute;
-  top: 74px;
-  left: 0;
-  width: 48px;
-  height: 2px;
-  background: var(--warm);
-}
-
-.markdown-body .site-nav {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-end;
-  gap: 18px;
-  margin-bottom: 58px;
-}
-
-.markdown-body .site-nav a {
-  color: var(--muted);
-  font-size: 14px;
-  font-weight: 500;
-  text-decoration: none;
-}
-
-.markdown-body .site-nav a:hover {
-  color: var(--blue);
-}
-
-.markdown-body .site-kicker {
+.markdown-body > div[align="center"] h1 {
   margin: 0 0 14px;
-  color: var(--green);
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-}
-
-.markdown-body .site-hero h1 {
-  max-width: 720px;
-  margin: 0;
-  padding: 0;
+  padding-bottom: 12px;
   color: var(--ink);
-  border: 0;
-  font-size: 56px;
-  font-weight: 750;
+  border-bottom: 1px solid var(--line);
+  font-size: 32px;
+  font-weight: 650;
   letter-spacing: 0;
-  line-height: 1.04;
+  line-height: 1.3;
 }
 
-.markdown-body .site-subtitle {
-  max-width: 620px;
-  margin: 20px 0 24px;
-  color: var(--muted);
-  font-size: 19px;
-  line-height: 1.7;
+.markdown-body > div[align="center"] p {
+  margin: 14px 0;
+  color: var(--ink);
 }
 
-.markdown-body .site-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-}
-
-.markdown-body .site-tags span {
-  padding: 4px 10px;
-  color: var(--muted);
-  font-size: 13px;
-  border: 1px solid var(--line);
-  border-radius: 999px;
-  background: #fafbfc;
-}
-
-.markdown-body .site-intro {
-  max-width: 680px;
-  margin: 28px 0 8px;
-  color: var(--muted);
+.markdown-body > div[align="center"] a {
   font-size: 16px;
+}
+
+.markdown-body p {
+  color: var(--ink);
+  overflow-wrap: anywhere;
+}
+
+.markdown-body hr {
+  height: 4px;
+  margin: 24px 0 24px;
+  background: #d0d7de;
+  border: 0;
 }
 
 .markdown-body h1,
@@ -147,147 +94,63 @@ body {
   letter-spacing: 0;
 }
 
-.markdown-body h1 {
-  padding-bottom: 0;
-  border-bottom: 0;
-  font-size: 42px;
-  line-height: 1.16;
-}
-
 .markdown-body h2 {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  margin-top: 52px;
-  margin-bottom: 10px;
-  padding-bottom: 0;
-  color: var(--ink);
-  border-bottom: 0;
-  font-size: 21px;
-  line-height: 1.4;
-}
-
-.markdown-body h2::after {
-  content: "";
-  flex: 1;
-  height: 1px;
-  background: var(--line);
+  margin-top: 26px;
+  margin-bottom: 12px;
+  padding-bottom: 7px;
+  border-bottom: 1px solid var(--line);
+  font-size: 24px;
+  line-height: 1.35;
 }
 
 .markdown-body h3 {
-  margin-top: 30px;
-  font-size: 17px;
-}
-
-.markdown-body p {
-  color: var(--muted);
-}
-
-.markdown-body hr {
-  display: none;
+  margin-top: 24px;
+  font-size: 18px;
 }
 
 .markdown-body a {
-  color: var(--blue);
-  text-decoration-color: rgba(49, 95, 143, 0.26);
-  text-underline-offset: 0.18em;
-  transition: color 0.16s ease, border-color 0.16s ease,
-    background-color 0.16s ease, text-decoration-color 0.16s ease;
+  color: var(--link);
+  text-decoration: underline;
+  text-decoration-color: rgba(47, 111, 159, 0.32);
+  text-underline-offset: 0.16em;
+  overflow-wrap: anywhere;
 }
 
 .markdown-body a:hover {
-  color: #244b75;
-  text-decoration-color: rgba(36, 75, 117, 0.52);
-}
-
-.markdown-body .post-item {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  gap: 20px;
-  align-items: baseline;
-  padding: 18px 0;
-  border-bottom: 1px solid var(--line);
-}
-
-.markdown-body .post-title {
-  color: var(--ink);
-  font-size: 17px;
-  font-weight: 600;
-  text-decoration: none;
-}
-
-.markdown-body .post-title:hover {
-  color: var(--blue);
-}
-
-.markdown-body .post-date {
-  color: var(--soft);
-  font-size: 14px;
-  font-variant-numeric: tabular-nums;
-  white-space: nowrap;
+  color: #1f5f89;
+  text-decoration-color: rgba(31, 95, 137, 0.64);
 }
 
 .markdown-body ul {
-  padding-left: 0;
+  margin-top: 0;
+  padding-left: 2em;
 }
 
 .markdown-body li {
-  display: flex;
-  align-items: baseline;
-  gap: 10px;
-  margin: 0;
-  padding: 12px 0;
-  color: var(--soft);
-  list-style: none;
-  border-bottom: 1px solid var(--line);
-}
-
-.markdown-body li::before {
-  content: "";
-  flex: 0 0 5px;
-  width: 5px;
-  height: 5px;
-  margin-top: 0.72em;
-  background: var(--line-strong);
-  border-radius: 50%;
-}
-
-.markdown-body li a {
+  margin: 7px 0;
   color: var(--ink);
-  font-weight: 500;
-  text-decoration: none;
-}
-
-.markdown-body li a:hover {
-  color: var(--blue);
 }
 
 .markdown-body blockquote {
-  margin: 22px 0;
-  padding: 2px 18px;
+  margin: 20px 0;
+  padding: 1px 16px;
   color: var(--muted);
-  background: #f8fafb;
-  border-left: 3px solid var(--green);
-  border-radius: 0 6px 6px 0;
+  border-left: 4px solid var(--line-strong);
 }
 
 .markdown-body code,
 .markdown-body tt {
-  padding: 0.18em 0.38em;
-  color: #394756;
-  background: var(--code-bg);
+  padding: 0.18em 0.36em;
+  color: var(--ink);
+  background: #f3f4f6;
   border-radius: 5px;
 }
 
 .markdown-body pre {
   padding: 16px;
-  background: #17212c;
+  background: #f6f8fa;
+  border: 1px solid var(--line);
   border-radius: 8px;
-}
-
-.markdown-body pre code {
-  color: #f6f8fa;
-  background: transparent;
 }
 
 .markdown-body table {
@@ -304,31 +167,13 @@ body {
   border-color: var(--line);
 }
 
-.markdown-body table tr {
-  background: var(--surface);
-  border-top-color: var(--line);
-}
-
-.markdown-body table tr:nth-child(2n) {
-  background: #f8fafb;
-}
-
 .markdown-body details {
-  margin: 18px 0;
-  padding: 12px 14px;
-  border: 1px solid var(--line);
-  border-radius: 8px;
-  background: #fcfdfe;
+  margin: 16px 0;
 }
 
 .markdown-body summary {
-  color: var(--muted);
+  color: var(--link);
   cursor: pointer;
-  font-weight: 600;
-}
-
-.markdown-body img {
-  border-radius: 8px;
 }
 
 .footer {
@@ -343,7 +188,7 @@ body {
 
   .container-lg {
     margin: 0 !important;
-    padding: 30px 20px !important;
+    padding: 34px 20px 28px !important;
     border: 0;
     border-radius: 0;
     box-shadow: none;
@@ -353,42 +198,11 @@ body {
     font-size: 15.5px;
   }
 
-  .markdown-body .site-hero {
-    min-height: auto;
-    padding-bottom: 32px;
-  }
-
-  .markdown-body .site-hero::before {
-    top: 68px;
-    width: 38px;
-  }
-
-  .markdown-body .site-nav {
-    justify-content: flex-start;
-    gap: 14px;
-    margin-bottom: 48px;
-  }
-
-  .markdown-body .site-hero h1 {
-    font-size: 38px;
-  }
-
-  .markdown-body .site-subtitle {
-    font-size: 16px;
-  }
-
-  .markdown-body h1 {
-    font-size: 32px;
+  .markdown-body > div[align="center"] h1 {
+    font-size: 28px;
   }
 
   .markdown-body h2 {
-    margin-top: 38px;
-    font-size: 18px;
-  }
-
-  .markdown-body .post-item {
-    grid-template-columns: 1fr;
-    gap: 4px;
-    padding: 15px 0;
+    font-size: 22px;
   }
 }
