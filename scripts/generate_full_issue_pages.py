@@ -1,4 +1,5 @@
 import argparse
+import html
 import json
 import os
 import sys
@@ -71,23 +72,7 @@ def normalize_markdown(body):
     return body if body else "_这一层暂时没有正文。_"
 
 
-def render_issue(owner, repo, issue, comments):
-    number = issue["number"]
-    labels = [label["name"] for label in issue.get("labels", [])]
-    frontmatter = [
-        "+++",
-        f"title = {toml_string(issue.get('title'))}",
-        f"date = {format_date(issue.get('created_at'))}",
-        "[taxonomies]",
-        f"tags = {toml_array(labels)}",
-        "[extra]",
-        f"issue_url = {toml_string(issue_html_url(owner, repo, number))}",
-        f"issue_number = {number}",
-        f"comment_count = {len(comments)}",
-        "+++",
-        "",
-    ]
-
+def render_issue_body(issue, comments):
     body_parts = [
         floor_label("主楼", issue.get("user"), issue.get("created_at")),
         "",
@@ -106,14 +91,114 @@ def render_issue(owner, repo, issue, comments):
             ]
         )
 
-    return "\n".join(frontmatter + body_parts).rstrip() + "\n"
+    return "\n".join(body_parts).rstrip() + "\n"
 
 
-def write_issue_pages(owner, repo, output_dir, token=None, state="open"):
+def render_zola_issue(owner, repo, issue, comments):
+    number = issue["number"]
+    labels = [label["name"] for label in issue.get("labels", [])]
+    frontmatter = [
+        "+++",
+        f"title = {toml_string(issue.get('title'))}",
+        f"date = {format_date(issue.get('created_at'))}",
+        "[taxonomies]",
+        f"tags = {toml_array(labels)}",
+        "[extra]",
+        f"issue_url = {toml_string(issue_html_url(owner, repo, number))}",
+        f"issue_number = {number}",
+        f"comment_count = {len(comments)}",
+        "+++",
+        "",
+    ]
+
+    return "\n".join(frontmatter) + render_issue_body(issue, comments)
+
+
+def render_static_issue(owner, repo, issue, comments):
+    import markdown
+
+    number = issue["number"]
+    title = issue.get("title") or f"Issue {number}"
+    date = format_date(issue.get("created_at"))
+    comment_count = len(comments)
+    labels = [label["name"] for label in issue.get("labels", [])]
+    labels_html = "".join(f"<span>#{html.escape(label)}</span>" for label in labels)
+    article_html = markdown.markdown(
+        render_issue_body(issue, comments),
+        output_format="html5",
+        extensions=["extra", "sane_lists"],
+    )
+
+    return f"""<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{html.escape(title)} · Equ's Blog</title>
+  <meta name="description" content="由 GitHub Issues 自动同步生成的阅读页">
+  <link rel="stylesheet" href="../assets/css/home.css">
+  <link rel="alternate" type="application/atom+xml" title="Equ's Blog" href="../feed.xml">
+  <script defer src="../assets/js/home.js"></script>
+</head>
+<body>
+  <div class="reading-progress" aria-hidden="true"></div>
+  <header class="site-header">
+    <a class="brand" href="../">Equ</a>
+    <nav class="nav" aria-label="Primary navigation">
+      <a href="../">首页</a>
+      <a href="../#latest">最近更新</a>
+      <a href="../feed.xml">RSS</a>
+      <a href="https://github.com/{html.escape(owner)}/{html.escape(repo)}">GitHub</a>
+    </nav>
+    <button class="theme-toggle" type="button" aria-label="切换深浅主题" aria-pressed="false">
+      <span class="theme-toggle-mark" aria-hidden="true">夜</span>
+      <span class="theme-toggle-label">夜间</span>
+    </button>
+  </header>
+
+  <main>
+    <article class="article reading-article">
+      <header class="article-header">
+        <div class="article-kicker">
+          <a class="back-link" href="../">← 返回首页</a>
+          <span>Issue archive</span>
+        </div>
+        <h1>{html.escape(title)}</h1>
+        <div class="article-meta">
+          <time datetime="{date}">{date}</time>
+          <span>·</span>
+          <span>{comment_count} 个评论楼层</span>
+          {f'<span>·</span><div class="article-tags">{labels_html}</div>' if labels_html else ''}
+        </div>
+        <p class="article-intro">这篇文章由 GitHub Issues 自动同步生成，保留原始记录，也提供更安静的阅读版式。</p>
+      </header>
+
+      <div class="article-content">
+{article_html}
+      </div>
+
+      <footer class="article-footer">
+        <a class="button" href="../">回到首页</a>
+        <a class="issue-link" href="{issue_html_url(owner, repo, number)}">在 GitHub Issue 中查看原文</a>
+      </footer>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <span>Equ's Blog</span>
+    <span>Notes from GitHub Issues.</span>
+  </footer>
+</body>
+</html>
+"""
+
+
+def write_issue_pages(owner, repo, output_dir, token=None, state="open", static_output_dir=None):
     issues_url = f"{API_ROOT}/repos/{owner}/{repo}/issues?state={state}"
     issues = collect_paginated(issues_url, token=token)
     output_path = Path(output_dir)
     output_path.mkdir(parents=True, exist_ok=True)
+    static_output_path = Path(static_output_dir) if static_output_dir else None
 
     written = 0
     for issue in issues:
@@ -122,8 +207,15 @@ def write_issue_pages(owner, repo, output_dir, token=None, state="open"):
         number = issue["number"]
         comments_url = f"{API_ROOT}/repos/{owner}/{repo}/issues/{number}/comments"
         comments = collect_paginated(comments_url, token=token)
-        markdown = render_issue(owner, repo, issue, comments)
+        markdown = render_zola_issue(owner, repo, issue, comments)
         (output_path / f"issue-{number}.md").write_text(markdown, encoding="utf-8")
+        if static_output_path:
+            issue_dir = static_output_path / f"issue-{number}"
+            issue_dir.mkdir(parents=True, exist_ok=True)
+            (issue_dir / "index.html").write_text(
+                render_static_issue(owner, repo, issue, comments),
+                encoding="utf-8",
+            )
         written += 1
 
     return written
@@ -136,6 +228,7 @@ def parse_args():
     parser.add_argument("--user", required=True, help="GitHub owner")
     parser.add_argument("--repo", required=True, help="GitHub repository")
     parser.add_argument("--output", default="output/content", help="Zola content directory")
+    parser.add_argument("--static-output", help="Optional static site root for issue-N/index.html")
     parser.add_argument("--state", default="open", choices=["open", "closed", "all"])
     return parser.parse_args()
 
@@ -150,7 +243,14 @@ def main():
         parsed = repo.split("/", 1)
         owner, repo = parsed[0], parsed[1]
 
-    written = write_issue_pages(owner, repo, args.output, token=token, state=args.state)
+    written = write_issue_pages(
+        owner,
+        repo,
+        args.output,
+        token=token,
+        state=args.state,
+        static_output_dir=args.static_output,
+    )
     print(f"Generated {written} full issue page(s) in {args.output}")
 
 

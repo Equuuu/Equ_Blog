@@ -11,6 +11,7 @@ on:
       - main
     paths:
       - main.py
+      - scripts/generate_full_issue_pages.py
       - .github/workflows/generate_readme.yml
 
 jobs:
@@ -38,14 +39,17 @@ jobs:
           pip install -r requirements.txt
 
       - name: Generate new md
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
           source venv/bin/activate
           python main.py ${{ secrets.G_T }} ${{ github.repository }} --issue_number '${{ github.event.issue.number }}'
+          python scripts/generate_full_issue_pages.py --user ${{ github.repository_owner }} --repo ${{ github.event.repository.name }} --output output/content --static-output .
 
       - name: Push README
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git add README.md feed.xml BACKUP/*.md
+          git add README.md feed.xml BACKUP/*.md issue-*/index.html
           git commit -m 'update blog index' || echo "nothing to commit"
           git push || echo "nothing to push"
