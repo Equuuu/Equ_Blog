@@ -5,9 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{% block title %}{{ config.title }}{% endblock title %}</title>
   <meta name="description" content="{{ config.description }}">
-  <link rel="stylesheet" href="{{ get_url(path='css/equ.css') }}">
+  <link rel="stylesheet" href="{{ get_url(path='css/equ.css', cachebust=true) }}">
   <link rel="alternate" type="application/atom+xml" title="{{ config.title }}" href="{{ get_url(path='atom.xml') }}">
-  <script defer src="{{ get_url(path='js/equ.js') }}"></script>
+  <script defer src="{{ get_url(path='js/equ.js', cachebust=true) }}"></script>
 </head>
 <body>
   <div class="reading-progress" aria-hidden="true"></div>
