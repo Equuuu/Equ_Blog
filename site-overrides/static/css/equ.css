@@ -575,7 +575,7 @@ main {
 
 .archive-page h1 {
   margin-bottom: 8px;
-  font-size: clamp(2.6rem, 7vw, 5.2rem);
+  font-size: clamp(2.1rem, 4.8vw, 3.65rem);
 }
 
 .archive-summary {
@@ -605,8 +605,8 @@ main {
   grid-template-columns: 48px minmax(0, 1fr) auto;
   gap: 18px;
   align-items: center;
-  min-height: 72px;
-  padding: 16px 0;
+  min-height: 64px;
+  padding: 14px 0;
   color: var(--ink);
   text-decoration: none;
   transition: color 160ms ease;
@@ -631,7 +631,7 @@ main {
   overflow-wrap: anywhere;
   font-family: "Songti SC", "STSong", "Noto Serif SC", "Source Han Serif SC",
     Georgia, serif;
-  font-size: clamp(1.45rem, 3.4vw, 2.45rem);
+  font-size: clamp(1.25rem, 2.6vw, 1.95rem);
   font-weight: 520;
   line-height: 1.28;
 }
@@ -680,9 +680,9 @@ main {
   margin-top: 0;
   font-family: "Songti SC", "STSong", "Noto Serif SC", "Source Han Serif SC",
     Georgia, serif;
-  font-size: clamp(2.15rem, 6vw, 4.6rem);
+  font-size: clamp(1.95rem, 4.6vw, 3.45rem);
   font-weight: 500;
-  line-height: 1.16;
+  line-height: 1.18;
 }
 
 .reading-article .article-meta {
@@ -908,12 +908,12 @@ main {
   .tag-list a {
     grid-template-columns: 36px minmax(0, 1fr);
     gap: 12px;
-    min-height: 68px;
+    min-height: 58px;
   }
 
   .tag-list-count {
     grid-column: 2;
-    margin-top: -6px;
+    margin-top: -4px;
   }
 
   .site-footer {
@@ -929,6 +929,10 @@ main {
   .article-tags,
   .article-footer {
     justify-content: flex-start;
+  }
+
+  .reading-article .article-header h1 {
+    font-size: clamp(1.75rem, 8vw, 2.45rem);
   }
 
   .reading-article .article-content {

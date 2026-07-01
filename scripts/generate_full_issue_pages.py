@@ -170,7 +170,6 @@ def render_static_issue(owner, repo, issue, comments):
           <span>{comment_count} 个评论楼层</span>
           {f'<span>·</span><div class="article-tags">{labels_html}</div>' if labels_html else ''}
         </div>
-        <p class="article-intro">这篇文章由 GitHub Issues 自动同步生成，保留原始记录，也提供更安静的阅读版式。</p>
       </header>
 
       <div class="article-content">
