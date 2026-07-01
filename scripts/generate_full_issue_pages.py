@@ -1,4 +1,4 @@
-import argparse
+﻿import argparse
 import html
 import json
 import os
@@ -160,6 +160,10 @@ def render_static_issue(owner, repo, issue, comments):
       <a href="../feed.xml">RSS</a>
       <a href="https://github.com/{html.escape(owner)}/{html.escape(repo)}">GitHub</a>
     </nav>
+    <button class="music-toggle" type="button" aria-label="播放巴赫音乐" aria-pressed="false" data-music-src="https://upload.wikimedia.org/wikipedia/commons/transcoded/4/4b/Bach_-_Cello_Suite_no._1_in_G_major%2C_BWV_1007_-_IV._Sarabande.ogg/Bach_-_Cello_Suite_no._1_in_G_major%2C_BWV_1007_-_IV._Sarabande.ogg.mp3">
+      <span class="music-toggle-dot" aria-hidden="true"></span>
+      <span class="music-toggle-label">Bach</span>
+    </button>
     <button class="theme-toggle" type="button" aria-label="切换深浅主题" aria-pressed="false">
       <span class="theme-toggle-mark" aria-hidden="true">夜</span>
       <span class="theme-toggle-label">夜间</span>
@@ -274,6 +278,10 @@ def render_static_home(owner, repo, issues):
       <a href="feed.xml">RSS</a>
       <a href="https://github.com/{html.escape(owner)}/{html.escape(repo)}">GitHub</a>
     </nav>
+    <button class="music-toggle" type="button" aria-label="播放巴赫音乐" aria-pressed="false" data-music-src="https://upload.wikimedia.org/wikipedia/commons/transcoded/4/4b/Bach_-_Cello_Suite_no._1_in_G_major%2C_BWV_1007_-_IV._Sarabande.ogg/Bach_-_Cello_Suite_no._1_in_G_major%2C_BWV_1007_-_IV._Sarabande.ogg.mp3">
+      <span class="music-toggle-dot" aria-hidden="true"></span>
+      <span class="music-toggle-label">Bach</span>
+    </button>
     <button class="theme-toggle" type="button" aria-label="切换深浅主题" aria-pressed="false">
       <span class="theme-toggle-mark" aria-hidden="true">夜</span>
       <span class="theme-toggle-label">夜间</span>

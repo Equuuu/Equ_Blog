@@ -10,6 +10,9 @@
   const emptyState = document.querySelector(".search-empty");
   const storageKey = "equ-blog-theme";
   const progress = document.querySelector(".reading-progress");
+  const musicToggle = document.querySelector(".music-toggle");
+  const musicStorageKey = "equ-blog-music";
+  let musicAudio = null;
 
   postGroups.forEach((group) => {
     group.dataset.defaultOpen = String(group.open);
@@ -54,6 +57,94 @@
   toggle?.addEventListener("click", () => {
     setTheme(root.dataset.theme === "dark" ? "light" : "dark");
   });
+
+  const setMusicState = (isPlaying) => {
+    musicToggle?.setAttribute("aria-pressed", String(isPlaying));
+    musicToggle?.setAttribute("aria-label", isPlaying ? "暂停巴赫音乐" : "播放巴赫音乐");
+  };
+
+  const storeMusicState = (isPlaying) => {
+    try {
+      localStorage.setItem(musicStorageKey, isPlaying ? "playing" : "paused");
+    } catch {
+      // Music playback should still work if storage is unavailable.
+    }
+  };
+
+  const readStoredMusicState = () => {
+    try {
+      return localStorage.getItem(musicStorageKey);
+    } catch {
+      return null;
+    }
+  };
+
+  const getMusicAudio = () => {
+    const source = musicToggle?.dataset.musicSrc;
+    if (!source) {
+      return null;
+    }
+    if (!musicAudio) {
+      musicAudio = new Audio(source);
+      musicAudio.loop = true;
+      musicAudio.preload = "none";
+      musicAudio.volume = 0.26;
+      musicAudio.addEventListener("play", () => setMusicState(true));
+      musicAudio.addEventListener("pause", () => setMusicState(false));
+      musicAudio.addEventListener("error", () => {
+        setMusicState(false);
+        storeMusicState(false);
+      });
+    }
+    return musicAudio;
+  };
+
+  const playMusic = async (remember = true) => {
+    const audio = getMusicAudio();
+    if (!audio) {
+      return;
+    }
+    try {
+      setMusicState(true);
+      await audio.play();
+      setMusicState(true);
+      if (remember) {
+        storeMusicState(true);
+      }
+    } catch {
+      setMusicState(false);
+      if (remember) {
+        storeMusicState(false);
+      }
+    }
+  };
+
+  const pauseMusic = () => {
+    const audio = getMusicAudio();
+    if (!audio) {
+      return;
+    }
+    audio.pause();
+    setMusicState(false);
+    storeMusicState(false);
+  };
+
+  setMusicState(false);
+  musicToggle?.addEventListener("click", () => {
+    const audio = getMusicAudio();
+    if (!audio) {
+      return;
+    }
+    if (audio.paused) {
+      playMusic(true);
+    } else {
+      pauseMusic();
+    }
+  });
+
+  if (readStoredMusicState() === "playing") {
+    playMusic(false);
+  }
 
   const applySearch = () => {
     const query = (searchInput?.value || "").trim().toLowerCase();
