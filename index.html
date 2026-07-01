@@ -9,58 +9,80 @@
   <link rel="alternate" type="application/atom+xml" title="Equ's Blog" href="feed.xml">
 </head>
 <body>
-  <main class="page-shell">
-    <header class="site-hero">
-      <h1>Equ's Blog</h1>
-      <p>仿佛像水面泡沫的短暂光亮。</p>
-      <nav aria-label="主页导航">
-        <a href="#latest">最近更新</a>
-        <span>·</span>
-        <a href="#notes">读书笔记</a>
-        <span>·</span>
-        <a href="feed.xml">RSS Feed</a>
-        <span>·</span>
-        <a href="https://github.com/Equuuu/Equ_Blog">GitHub</a>
-      </nav>
-    </header>
+  <header class="site-header">
+    <a class="brand" href="./">Equ</a>
+    <nav class="nav" aria-label="Primary navigation">
+      <a href="#latest">最近更新</a>
+      <a href="#about">关于</a>
+      <a href="feed.xml">RSS</a>
+      <a href="https://github.com/Equuuu/Equ_Blog">GitHub</a>
+    </nav>
+  </header>
 
-    <hr>
-
-    <p class="intro">这里记录阅读、生活、技术、我们曾种植的蜀葵，以及一些短暂但明亮的东西。</p>
-
-    <section id="latest">
-      <h2>最近更新</h2>
-      <ul class="post-list">
-        <li>
-          <a href="https://github.com/Equuuu/Equ_Blog/issues/14">比特花园（蜀葵季）</a>
-          <time datetime="2024-05-08">2024-05-08</time>
-        </li>
-        <li>
-          <a href="https://github.com/Equuuu/Equ_Blog/issues/4">地球生存录</a>
-          <time datetime="2023-05-14">2023-05-14</time>
-        </li>
-      </ul>
+  <main>
+    <section class="hero">
+      <div class="hero-copy">
+        <p class="eyebrow">Digital garden / notes / essays</p>
+        <h1>彷佛像水面泡沫的短暂光亮</h1>
+        <p class="hero-text">这里有小马的阅读、生活、技术和日常观察，以及曾经我们种植的蜀葵。</p>
+        <div class="hero-actions">
+          <a class="button button-primary" href="#latest">阅读最近更新</a>
+          <a class="button" href="https://github.com/Equuuu/Equ_Blog/issues">浏览 Issues</a>
+        </div>
+      </div>
+      <aside class="hero-panel" aria-label="Blog summary">
+        <span class="panel-kicker">Archive</span>
+        <strong>2</strong>
+        <span>篇公开记录</span>
+        <div class="theme-list">
+          <span>阅读</span>
+          <span>生活</span>
+          <span>技术</span>
+          <span>花园</span>
+        </div>
+      </aside>
     </section>
 
-    <section>
-      <h2>生前所述</h2>
-      <ul class="post-list">
-        <li>
-          <a href="https://github.com/Equuuu/Equ_Blog/issues/4">地球生存录</a>
+    <section class="section-block" id="latest">
+      <div class="section-heading">
+        <p>Latest</p>
+        <h2>最近更新</h2>
+      </div>
+      <div class="post-list">
+        <article class="post-card">
+          <div>
+            <a class="post-title" href="https://github.com/Equuuu/Equ_Blog/issues/14">比特花园（蜀葵季）</a>
+            <div class="post-tags">
+              <span>读书笔记</span>
+              <span>花园</span>
+            </div>
+          </div>
+          <time datetime="2024-05-08">2024-05-08</time>
+        </article>
+        <article class="post-card">
+          <div>
+            <a class="post-title" href="https://github.com/Equuuu/Equ_Blog/issues/4">地球生存录</a>
+            <div class="post-tags">
+              <span>生活</span>
+            </div>
+          </div>
           <time datetime="2023-05-14">2023-05-14</time>
-        </li>
-      </ul>
+        </article>
+      </div>
     </section>
 
-    <section id="notes">
-      <h2>读书笔记</h2>
-      <ul class="post-list">
-        <li>
-          <a href="https://github.com/Equuuu/Equ_Blog/issues/14">比特花园（蜀葵季）</a>
-          <time datetime="2024-05-08">2024-05-08</time>
-        </li>
-      </ul>
+    <section class="section-block about-block" id="about">
+      <div class="section-heading">
+        <p>About</p>
+        <h2>关于这里</h2>
+      </div>
+      <p>这个博客由 GitHub Issues 自动整理。宇宙如果放任不管，就会朝着散乱的方向发展，而我们却通过修复身体、整理信息来对抗这个宇宙的法则，正是这种对抗让我们活了下来，而对抗的痕迹则以记忆、文化和语言的形式残留在宇宙中。一切都朝着易碎而短暂的方向前进，然而人类却试图保存文化，留下爱与记忆</p>
     </section>
   </main>
+
+  <footer class="site-footer">
+    <span>Equ's Blog</span>
+    <span>Notes from GitHub Issues.</span>
+  </footer>
 </body>
 </html>
