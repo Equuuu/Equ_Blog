@@ -7,16 +7,28 @@
   <meta name="description" content="{{ config.description }}">
   <link rel="stylesheet" href="{{ get_url(path='css/equ.css') }}">
   <link rel="alternate" type="application/atom+xml" title="{{ config.title }}" href="{{ get_url(path='atom.xml') }}">
+  <script defer src="{{ get_url(path='js/equ.js') }}"></script>
 </head>
 <body>
   <header class="site-header">
-    <a class="brand" href="{{ config.base_url }}/">Equ</a>
+    <a class="brand" href="{{ config.base_url }}/" aria-label="{{ config.title }}">
+      <span class="brand-mark">E</span>
+      <span class="brand-text">
+        <strong>{{ config.title }}</strong>
+        <small>Dear Yoko</small>
+      </span>
+    </a>
     <nav class="nav" aria-label="Primary navigation">
-      <a href="{{ config.base_url }}/">首页</a>
+      <a href="{{ config.base_url }}/#latest">最近书写</a>
+      <a href="{{ config.base_url }}/#themes">主题</a>
       <a href="{{ config.base_url }}/tags/">标签</a>
       <a href="{{ get_url(path='atom.xml') }}">RSS</a>
       <a href="https://github.com/Equuuu/Equ_Blog">GitHub</a>
     </nav>
+    <button class="theme-toggle" type="button" aria-label="切换深浅主题" aria-pressed="false">
+      <span class="theme-toggle-icon" aria-hidden="true"></span>
+      <span class="theme-toggle-text">夜间</span>
+    </button>
   </header>
 
   <main>

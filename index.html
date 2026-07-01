@@ -7,76 +7,164 @@
   <meta name="description" content="阅读、生活、技术与一些短暂但明亮的记录">
   <link rel="stylesheet" href="assets/css/home.css">
   <link rel="alternate" type="application/atom+xml" title="Equ's Blog" href="feed.xml">
+  <script defer src="assets/js/home.js"></script>
 </head>
 <body>
   <header class="site-header">
-    <a class="brand" href="./">Equ</a>
+    <a class="brand" href="./" aria-label="Equ's Blog">
+      <span class="brand-mark">E</span>
+      <span class="brand-text">
+        <strong>Equ's Blog</strong>
+        <small>Dear Yoko</small>
+      </span>
+    </a>
     <nav class="nav" aria-label="Primary navigation">
-      <a href="#latest">最近更新</a>
-      <a href="#about">关于</a>
+      <a href="#latest">最近书写</a>
+      <a href="#themes">主题</a>
+      <a href="#archive">归档</a>
       <a href="feed.xml">RSS</a>
       <a href="https://github.com/Equuuu/Equ_Blog">GitHub</a>
     </nav>
+    <button class="theme-toggle" type="button" aria-label="切换深浅主题" aria-pressed="false">
+      <span class="theme-toggle-icon" aria-hidden="true"></span>
+      <span class="theme-toggle-text">夜间</span>
+    </button>
   </header>
 
   <main>
-    <section class="hero">
-      <div class="hero-copy">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-inner">
         <p class="eyebrow">Digital garden / notes / essays</p>
-        <h1>彷佛像水面泡沫的短暂光亮</h1>
+        <h1 id="hero-title">彷佛像水面泡沫的短暂光亮</h1>
         <p class="hero-text">这里有小马的阅读、生活、技术和日常观察，以及曾经我们种植的蜀葵。</p>
-        <div class="hero-actions">
-          <a class="button button-primary" href="#latest">阅读最近更新</a>
-          <a class="button" href="https://github.com/Equuuu/Equ_Blog/issues">浏览 Issues</a>
+        <p class="hero-note">记录那些容易消散、但曾经照亮过我们的东西。</p>
+        <div class="hero-actions" aria-label="Homepage shortcuts">
+          <a class="button button-primary" href="#latest">最近书写</a>
+          <a class="button" href="#themes">主题索引</a>
         </div>
       </div>
-      <aside class="hero-panel" aria-label="Blog summary">
-        <span class="panel-kicker">Archive</span>
-        <strong>2</strong>
-        <span>篇公开记录</span>
-        <div class="theme-list">
-          <span>阅读</span>
-          <span>生活</span>
-          <span>技术</span>
-          <span>花园</span>
+      <div class="hero-meta" aria-label="Blog summary">
+        <div>
+          <strong>2</strong>
+          <span>篇公开记录</span>
         </div>
-      </aside>
+        <div>
+          <strong>2023-2024</strong>
+          <span>持续整理</span>
+        </div>
+        <div>
+          <strong>Issues</strong>
+          <span>自动归档</span>
+        </div>
+      </div>
     </section>
 
-    <section class="section-block" id="latest">
+    <section class="theme-section" id="themes" aria-labelledby="themes-title">
+      <div class="section-heading">
+        <p>Themes</p>
+        <h2 id="themes-title">主题索引</h2>
+      </div>
+      <div class="theme-grid">
+        <a class="theme-card theme-reading" href="#latest" data-filter-link="阅读">
+          <span>阅读</span>
+          <strong>书页、注释和被保存下来的句子</strong>
+        </a>
+        <a class="theme-card theme-life" href="#latest" data-filter-link="生活">
+          <span>生活</span>
+          <strong>身体、日常和缓慢恢复的秩序</strong>
+        </a>
+        <a class="theme-card theme-tech" href="#latest" data-filter-link="技术">
+          <span>技术</span>
+          <strong>工具、系统和信息整理的方式</strong>
+        </a>
+        <a class="theme-card theme-garden" href="#latest" data-filter-link="花园">
+          <span>花园</span>
+          <strong>曾经种植的蜀葵和仍在生长的记忆</strong>
+        </a>
+      </div>
+    </section>
+
+    <section class="latest-section" id="latest" aria-labelledby="latest-title">
       <div class="section-heading">
         <p>Latest</p>
-        <h2>最近更新</h2>
+        <h2 id="latest-title">最近书写</h2>
       </div>
-      <div class="post-list">
-        <article class="post-card">
-          <div>
+
+      <div class="post-tools">
+        <label class="search-box">
+          <span class="sr-only">搜索文章</span>
+          <input type="search" id="post-search" placeholder="搜索文章" autocomplete="off">
+        </label>
+        <div class="filter-group" aria-label="按主题筛选">
+          <button class="filter-chip is-active" type="button" data-filter="all">全部</button>
+          <button class="filter-chip" type="button" data-filter="阅读">阅读</button>
+          <button class="filter-chip" type="button" data-filter="生活">生活</button>
+          <button class="filter-chip" type="button" data-filter="技术">技术</button>
+          <button class="filter-chip" type="button" data-filter="花园">花园</button>
+        </div>
+      </div>
+
+      <div class="post-list" data-post-list>
+        <article class="post-card" data-tags="阅读 读书笔记 花园" data-search="比特花园 蜀葵季 阅读 读书笔记 花园 关于蜀葵 阅读 与花园的记录">
+          <time datetime="2024-05-08">
+            <span>May</span>
+            <strong>08</strong>
+            <span>2024</span>
+          </time>
+          <div class="post-body">
             <a class="post-title" href="https://github.com/Equuuu/Equ_Blog/issues/14">比特花园（蜀葵季）</a>
+            <p>关于蜀葵、阅读与花园的记录，像把一小片生长中的光保存下来。</p>
             <div class="post-tags">
               <span>读书笔记</span>
               <span>花园</span>
             </div>
           </div>
-          <time datetime="2024-05-08">2024-05-08</time>
         </article>
-        <article class="post-card">
-          <div>
+        <article class="post-card" data-tags="生活" data-search="地球生存录 生活 身体 日常 秩序 记忆">
+          <time datetime="2023-05-14">
+            <span>May</span>
+            <strong>14</strong>
+            <span>2023</span>
+          </time>
+          <div class="post-body">
             <a class="post-title" href="https://github.com/Equuuu/Equ_Blog/issues/4">地球生存录</a>
+            <p>一些关于生活、身体和继续保存记忆的日常观察。</p>
             <div class="post-tags">
               <span>生活</span>
             </div>
           </div>
-          <time datetime="2023-05-14">2023-05-14</time>
         </article>
+      </div>
+      <p class="empty-state" data-empty-state hidden>暂时没有匹配的文章。</p>
+    </section>
+
+    <section class="archive-strip" id="archive" aria-labelledby="archive-title">
+      <div class="section-heading">
+        <p>Archive</p>
+        <h2 id="archive-title">时间线</h2>
+      </div>
+      <div class="timeline">
+        <a href="https://github.com/Equuuu/Equ_Blog/issues/14">
+          <span>2024</span>
+          <strong>比特花园（蜀葵季）</strong>
+          <time datetime="2024-05-08">05.08</time>
+        </a>
+        <a href="https://github.com/Equuuu/Equ_Blog/issues/4">
+          <span>2023</span>
+          <strong>地球生存录</strong>
+          <time datetime="2023-05-14">05.14</time>
+        </a>
       </div>
     </section>
 
-    <section class="section-block about-block" id="about">
+    <section class="about-block" id="about" aria-labelledby="about-title">
       <div class="section-heading">
         <p>About</p>
-        <h2>关于这里</h2>
+        <h2 id="about-title">关于这里</h2>
       </div>
-      <p>这个博客由 GitHub Issues 自动整理。宇宙如果放任不管，就会朝着散乱的方向发展，而我们却通过修复身体、整理信息来对抗这个宇宙的法则，正是这种对抗让我们活了下来，而对抗的痕迹则以记忆、文化和语言的形式残留在宇宙中。一切都朝着易碎而短暂的方向前进，然而人类却试图保存文化，留下爱与记忆</p>
+      <div class="about-copy">
+        <p>这个博客由 GitHub Issues 自动整理。宇宙如果放任不管，就会朝着散乱的方向发展，而我们却通过修复身体、整理信息来对抗这个宇宙的法则，正是这种对抗让我们活了下来，而对抗的痕迹则以记忆、文化和语言的形式残留在宇宙中。一切都朝着易碎而短暂的方向前进，然而人类却试图保存文化，留下爱与记忆。</p>
+      </div>
     </section>
   </main>
 

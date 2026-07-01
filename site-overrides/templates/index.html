@@ -3,40 +3,90 @@
 {% block title %}{{ config.title }}{% endblock title %}
 
 {% block content %}
-<section class="hero">
-  <div class="hero-copy">
+<section class="hero" aria-labelledby="hero-title">
+  <div class="hero-inner">
     <p class="eyebrow">Digital garden / notes / essays</p>
-    <h1>彷佛像水面泡沫的短暂光亮</h1>
+    <h1 id="hero-title">彷佛像水面泡沫的短暂光亮</h1>
     <p class="hero-text">这里有小马的阅读、生活、技术和日常观察，以及曾经我们种植的蜀葵。</p>
-    <div class="hero-actions">
-      <a class="button button-primary" href="#latest">阅读最近更新</a>
-      <a class="button" href="{{ config.base_url }}/tags/">浏览标签</a>
+    <p class="hero-note">记录那些容易消散、但曾经照亮过我们的东西。</p>
+    <div class="hero-actions" aria-label="Homepage shortcuts">
+      <a class="button button-primary" href="#latest">最近书写</a>
+      <a class="button" href="#themes">主题索引</a>
     </div>
   </div>
-  <aside class="hero-panel" aria-label="Blog summary">
-    <span class="panel-kicker">Archive</span>
-    <strong>{{ paginator.pages | length }}</strong>
-    <span>篇公开记录</span>
-    <div class="theme-list">
-      <span>阅读</span>
-      <span>生活</span>
-      <span>技术</span>
-      <span>花园</span>
+  <div class="hero-meta" aria-label="Blog summary">
+    <div>
+      <strong>{{ paginator.pages | length }}</strong>
+      <span>篇公开记录</span>
     </div>
-  </aside>
+    <div>
+      <strong>GitHub</strong>
+      <span>Issues 归档</span>
+    </div>
+    <div>
+      <strong>RSS</strong>
+      <span>持续整理</span>
+    </div>
+  </div>
 </section>
 
-<section class="section-block" id="latest">
+<section class="theme-section" id="themes" aria-labelledby="themes-title">
+  <div class="section-heading">
+    <p>Themes</p>
+    <h2 id="themes-title">主题索引</h2>
+  </div>
+  <div class="theme-grid">
+    <a class="theme-card theme-reading" href="#latest" data-filter-link="阅读">
+      <span>阅读</span>
+      <strong>书页、注释和被保存下来的句子</strong>
+    </a>
+    <a class="theme-card theme-life" href="#latest" data-filter-link="生活">
+      <span>生活</span>
+      <strong>身体、日常和缓慢恢复的秩序</strong>
+    </a>
+    <a class="theme-card theme-tech" href="#latest" data-filter-link="技术">
+      <span>技术</span>
+      <strong>工具、系统和信息整理的方式</strong>
+    </a>
+    <a class="theme-card theme-garden" href="#latest" data-filter-link="花园">
+      <span>花园</span>
+      <strong>曾经种植的蜀葵和仍在生长的记忆</strong>
+    </a>
+  </div>
+</section>
+
+<section class="latest-section" id="latest" aria-labelledby="latest-title">
   <div class="section-heading">
     <p>Latest</p>
-    <h2>最近更新</h2>
+    <h2 id="latest-title">最近书写</h2>
   </div>
-  <div class="post-list">
+
+  <div class="post-tools">
+    <label class="search-box">
+      <span class="sr-only">搜索文章</span>
+      <input type="search" id="post-search" placeholder="搜索文章" autocomplete="off">
+    </label>
+    <div class="filter-group" aria-label="按主题筛选">
+      <button class="filter-chip is-active" type="button" data-filter="all">全部</button>
+      <button class="filter-chip" type="button" data-filter="阅读">阅读</button>
+      <button class="filter-chip" type="button" data-filter="生活">生活</button>
+      <button class="filter-chip" type="button" data-filter="技术">技术</button>
+      <button class="filter-chip" type="button" data-filter="花园">花园</button>
+    </div>
+  </div>
+
+  <div class="post-list" data-post-list>
     {% for page in paginator.pages %}
-      {% if loop.index <= 6 %}
-        <article class="post-card">
-          <div>
+      {% if loop.index <= 8 %}
+        <article class="post-card" data-tags="{% if page.taxonomies.tags %}{% for tag in page.taxonomies.tags %}{{ tag }} {% endfor %}{% endif %}" data-search="{{ page.title }} {% if page.taxonomies.tags %}{% for tag in page.taxonomies.tags %}{{ tag }} {% endfor %}{% endif %}">
+          <time datetime="{{ page.date }}">
+            <span>{{ page.date | date(format="%b") }}</span>
+            <strong>{{ page.date | date(format="%d") }}</strong>
+            <span>{{ page.date | date(format="%Y") }}</span>
+          </time>
+          <div class="post-body">
             <a class="post-title" href="{{ page.permalink }}">{{ page.title }}</a>
+            <p>从 GitHub Issues 自动整理而来的公开记录。</p>
             {% if page.taxonomies.tags %}
               <div class="post-tags">
                 {% for tag in page.taxonomies.tags %}
@@ -45,20 +95,40 @@
               </div>
             {% endif %}
           </div>
-          <time datetime="{{ page.date }}">{{ page.date | date(format="%Y-%m-%d") }}</time>
         </article>
       {% endif %}
     {% else %}
-      <p class="empty">还没有文章。</p>
+      <p class="empty-state">还没有文章。</p>
+    {% endfor %}
+  </div>
+  <p class="empty-state" data-empty-state hidden>暂时没有匹配的文章。</p>
+</section>
+
+<section class="archive-strip" id="archive" aria-labelledby="archive-title">
+  <div class="section-heading">
+    <p>Archive</p>
+    <h2 id="archive-title">时间线</h2>
+  </div>
+  <div class="timeline">
+    {% for page in paginator.pages %}
+      {% if loop.index <= 8 %}
+        <a href="{{ page.permalink }}">
+          <span>{{ page.date | date(format="%Y") }}</span>
+          <strong>{{ page.title }}</strong>
+          <time datetime="{{ page.date }}">{{ page.date | date(format="%m.%d") }}</time>
+        </a>
+      {% endif %}
     {% endfor %}
   </div>
 </section>
 
-<section class="section-block about-block">
+<section class="about-block" id="about" aria-labelledby="about-title">
   <div class="section-heading">
     <p>About</p>
-    <h2>关于这里</h2>
+    <h2 id="about-title">关于这里</h2>
   </div>
-  <p>这个博客由 GitHub Issues 自动整理。宇宙如果放任不管，就会朝着散乱的方向发展，而我们却通过修复身体、整理信息来对抗这个宇宙的法则，正是这种对抗让我们活了下来，而对抗的痕迹则以记忆、文化和语言的形式残留在宇宙中。一切都朝着易碎而短暂的方向前进，然而人类却试图保存文化，留下爱与记忆</p>
+  <div class="about-copy">
+    <p>这个博客由 GitHub Issues 自动整理。宇宙如果放任不管，就会朝着散乱的方向发展，而我们却通过修复身体、整理信息来对抗这个宇宙的法则，正是这种对抗让我们活了下来，而对抗的痕迹则以记忆、文化和语言的形式残留在宇宙中。一切都朝着易碎而短暂的方向前进，然而人类却试图保存文化，留下爱与记忆。</p>
+  </div>
 </section>
 {% endblock content %}
