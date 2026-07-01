@@ -12,6 +12,10 @@
     <h1>{{ page.title }}</h1>
     <div class="article-meta">
       <time datetime="{{ page.date }}">{{ page.date | date(format="%Y-%m-%d") }}</time>
+      {% if page.extra.comment_count is defined and page.extra.comment_count > 0 %}
+        <span>·</span>
+        <span>{{ page.extra.comment_count }} 个评论楼层</span>
+      {% endif %}
       {% if page.taxonomies.tags %}
         <span>·</span>
         <div class="article-tags">

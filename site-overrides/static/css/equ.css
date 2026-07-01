@@ -689,6 +689,15 @@ main {
   margin: 1.1em 0;
 }
 
+.reading-article .article-content .issue-floor-label {
+  margin: 0 0 1.4em;
+  color: var(--soft);
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
 .reading-article .article-content h2,
 .reading-article .article-content h3,
 .reading-article .article-content h4 {
