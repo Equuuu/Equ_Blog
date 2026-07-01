@@ -37,23 +37,25 @@
     </label>
     <button class="search-clear" type="button" hidden>清除</button>
   </div>
-  <div class="post-list">
-    {% for page in paginator.pages %}
-      {% if loop.index <= 6 %}
-        <article class="post-card" data-search="{{ page.title }}{% if page.taxonomies.tags %} {% for tag in page.taxonomies.tags %}{{ tag }} {% endfor %}{% endif %}">
-          <div>
-            <a class="post-title" href="{{ page.permalink }}">{{ page.title }}</a>
-            {% if page.taxonomies.tags %}
-              <div class="post-tags">
-                {% for tag in page.taxonomies.tags %}
-                  <span>{{ tag }}</span>
-                {% endfor %}
+  {% set tag_taxonomy = get_taxonomy(kind="tags") %}
+  <div class="post-groups">
+    {% for term in tag_taxonomy.items %}
+      <details class="post-group" data-group-search="{{ term.name }}">
+        <summary class="post-group-summary">
+          <span class="post-group-title">{{ term.name }}</span>
+          <span class="post-group-count">{{ term.pages | length }} 篇</span>
+        </summary>
+        <div class="post-list post-list-nested">
+          {% for page in term.pages %}
+            <article class="post-card" data-search="{{ page.title }} {{ term.name }}{% if page.taxonomies.tags %} {% for tag in page.taxonomies.tags %}{{ tag }} {% endfor %}{% endif %}">
+              <div>
+                <a class="post-title" href="{{ page.permalink }}">{{ page.title }}</a>
               </div>
-            {% endif %}
-          </div>
-          <time datetime="{{ page.date }}">{{ page.date | date(format="%Y-%m-%d") }}</time>
-        </article>
-      {% endif %}
+              <time datetime="{{ page.date }}">{{ page.date | date(format="%Y-%m-%d") }}</time>
+            </article>
+          {% endfor %}
+        </div>
+      </details>
     {% else %}
       <p class="empty">还没有文章。</p>
     {% endfor %}
@@ -65,6 +67,6 @@
   <div class="section-heading">
     <p>About</p>
   </div>
-  <p>这个博客由 GitHub Issues 自动整理。宇宙如果放任不管，就会朝着散乱的方向发展，而我们却通过修复身体、整理信息来对抗这个宇宙的法则，正是这种对抗让我们活了下来，而对抗的痕迹则以记忆、文化和语言的形式残留在宇宙中。一切都朝着易碎而短暂的方向前进，然而人类却试图保存文化，留下爱与记忆</p>
+  <p>这个博客由 GitHub Issues 自动整理。在这里我想留下这段话，宇宙如果放任不管，就会朝着散乱的方向发展，而我们却通过修复身体、整理信息来对抗这个宇宙的法则，正是这种对抗让我们活了下来，而对抗的痕迹则以记忆、文化和语言的形式残留在宇宙中，一切都朝着易碎而短暂的方向前进，然而人类却试图保存文化，留下爱与记忆。你说生命是一场苦行，人类需要脱离自己的劣根性，潜在的欲望，自我隐约的虚荣，自以为是的高尚和成功，探索内在的精神。去达到“神”的境界，选择和创造自己在乎的世界，并为这个“执念”而活，不需要过分地努力，只需要融化进自己的身体中。一个无关欲望，无关时代，无关他人的“心愿 执念 风格”。你觉得人是为了一个执念活着的，并因此经历生命的一切。至于它像什么，它像刺入灵魂的长长的柔软的钢筋，无意识地存在着，当不经意忘记和改变时，会感到心碎和疼痛，于是它变成了神性。于是，我爱你。</p>
 </section>
 {% endblock content %}

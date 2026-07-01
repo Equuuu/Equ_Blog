@@ -407,6 +407,79 @@ main {
   border-top: 1px solid var(--line);
 }
 
+.post-groups {
+  border-top: 1px solid var(--line);
+}
+
+.post-group {
+  border-bottom: 1px solid var(--line);
+}
+
+.post-group-summary {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto 22px;
+  gap: 16px;
+  align-items: center;
+  padding: 22px 0;
+  cursor: pointer;
+  list-style: none;
+}
+
+.post-group-summary::-webkit-details-marker {
+  display: none;
+}
+
+.post-group-summary::after {
+  content: "+";
+  display: inline-grid;
+  width: 22px;
+  height: 22px;
+  place-items: center;
+  color: var(--soft);
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 15px;
+  line-height: 1;
+}
+
+.post-group[open] .post-group-summary::after {
+  content: "-";
+}
+
+.post-group-title {
+  overflow-wrap: anywhere;
+  font-family: "Songti SC", "STSong", "Noto Serif SC", "Source Han Serif SC",
+    Georgia, serif;
+  font-size: clamp(1.35rem, 2.5vw, 2rem);
+  font-weight: 520;
+  line-height: 1.28;
+}
+
+.post-group-count {
+  color: var(--soft);
+  font-size: 14px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.post-list-nested {
+  margin-left: 54px;
+  border-top: 1px solid var(--line);
+}
+
+.post-list-nested .post-card {
+  padding: 18px 0;
+}
+
+.post-list-nested .post-card:last-child {
+  border-bottom: 0;
+}
+
+.post-list-nested .post-title {
+  font-size: 18px;
+}
+
 .post-card {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
@@ -457,7 +530,22 @@ main {
   font-size: 14px;
 }
 
-.about-block > p,
+.about-block .section-heading {
+  max-width: 980px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.about-block > p {
+  max-width: 980px;
+  margin: 0 auto;
+  color: var(--muted);
+  font-size: 16.5px;
+  line-height: 2.05;
+  text-align: justify;
+  text-justify: inter-ideograph;
+}
+
 .empty {
   max-width: 880px;
   margin: 0;
@@ -903,6 +991,20 @@ main {
   .post-card {
     grid-template-columns: 1fr;
     gap: 6px;
+  }
+
+  .post-group-summary {
+    grid-template-columns: minmax(0, 1fr) auto 22px;
+    gap: 10px;
+    padding: 18px 0;
+  }
+
+  .post-list-nested {
+    margin-left: 0;
+  }
+
+  .post-list-nested .post-title {
+    font-size: 17px;
   }
 
   .tag-list a {

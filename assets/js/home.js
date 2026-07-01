@@ -6,9 +6,14 @@
   const searchInput = document.querySelector(".blog-search-input");
   const clearButton = document.querySelector(".search-clear");
   const posts = Array.from(document.querySelectorAll(".post-card"));
+  const postGroups = Array.from(document.querySelectorAll(".post-group"));
   const emptyState = document.querySelector(".search-empty");
   const storageKey = "equ-blog-theme";
   const progress = document.querySelector(".reading-progress");
+
+  postGroups.forEach((group) => {
+    group.dataset.defaultOpen = String(group.open);
+  });
 
   const readStoredTheme = () => {
     try {
@@ -54,14 +59,49 @@
     const query = (searchInput?.value || "").trim().toLowerCase();
     let visibleCount = 0;
 
-    posts.forEach((post) => {
-      const haystack = `${post.dataset.search || ""} ${post.textContent || ""}`.toLowerCase();
-      const isVisible = !query || haystack.includes(query);
-      post.hidden = !isVisible;
-      if (isVisible) {
-        visibleCount += 1;
-      }
-    });
+    if (!query) {
+      posts.forEach((post) => {
+        post.hidden = false;
+      });
+      postGroups.forEach((group) => {
+        group.hidden = false;
+        group.open = group.dataset.defaultOpen === "true";
+      });
+      visibleCount = posts.length;
+    } else if (postGroups.length) {
+      postGroups.forEach((group) => {
+        const groupPosts = Array.from(group.querySelectorAll(".post-card"));
+        const groupHaystack = `${group.dataset.groupSearch || ""} ${
+          group.querySelector(".post-group-summary")?.textContent || ""
+        }`.toLowerCase();
+        const groupMatches = groupHaystack.includes(query);
+        let groupVisibleCount = 0;
+
+        groupPosts.forEach((post) => {
+          const haystack = `${post.dataset.search || ""} ${post.textContent || ""}`.toLowerCase();
+          const isVisible = groupMatches || haystack.includes(query);
+          post.hidden = !isVisible;
+          if (isVisible) {
+            groupVisibleCount += 1;
+            visibleCount += 1;
+          }
+        });
+
+        group.hidden = groupVisibleCount === 0;
+        if (groupVisibleCount > 0) {
+          group.open = true;
+        }
+      });
+    } else {
+      posts.forEach((post) => {
+        const haystack = `${post.dataset.search || ""} ${post.textContent || ""}`.toLowerCase();
+        const isVisible = haystack.includes(query);
+        post.hidden = !isVisible;
+        if (isVisible) {
+          visibleCount += 1;
+        }
+      });
+    }
 
     if (clearButton) {
       clearButton.hidden = !query;
