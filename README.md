@@ -1,6 +1,6 @@
 <div align="center">
 
-# Equ's Blog
+# Dear Yoko
 
 仿佛像水面泡沫的短暂光亮。
 
