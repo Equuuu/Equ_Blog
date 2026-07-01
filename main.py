@@ -94,6 +94,14 @@ def format_time(time):
     return str(time)[:10]
 
 
+def get_issue_page_url(issue):
+    match = re.match(r"https://github.com/([^/]+)/([^/]+)/issues/(\d+)", issue.html_url)
+    if not match:
+        return issue.html_url
+    owner, repo, number = match.groups()
+    return f"https://{owner}.github.io/{repo}/issue-{number}/"
+
+
 def login(token):
     return Github(token)
 
@@ -134,7 +142,7 @@ def get_issues_from_label(repo, label):
 def add_issue_info(issue, md):
     time = format_time(issue.created_at)
     md.write(
-        f"- [{issue.title}]({issue.html_url}) · {time}\n"
+        f"- [{issue.title}]({get_issue_page_url(issue)}) · {time}\n"
     )
 
 
@@ -285,7 +293,7 @@ def generate_rss_feed(repo, filename, me):
             continue
         item = generator.add_entry(order="append")
         item.id(issue.html_url)
-        item.link(href=issue.html_url)
+        item.link(href=get_issue_page_url(issue))
         item.title(issue.title)
         item.published(issue.created_at.strftime("%Y-%m-%dT%H:%M:%SZ"))
         for label in issue.labels:

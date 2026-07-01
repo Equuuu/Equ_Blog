@@ -8,6 +8,7 @@
   const posts = Array.from(document.querySelectorAll(".post-card"));
   const emptyState = document.querySelector(".search-empty");
   const storageKey = "equ-blog-theme";
+  const progress = document.querySelector(".reading-progress");
 
   const readStoredTheme = () => {
     try {
@@ -78,4 +79,17 @@
     }
     applySearch();
   });
+
+  const updateReadingProgress = () => {
+    if (!progress || !document.querySelector(".reading-article")) {
+      return;
+    }
+    const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+    const ratio = scrollable > 0 ? window.scrollY / scrollable : 0;
+    progress.style.transform = `scaleX(${Math.max(0, Math.min(1, ratio))})`;
+  };
+
+  updateReadingProgress();
+  window.addEventListener("scroll", updateReadingProgress, { passive: true });
+  window.addEventListener("resize", updateReadingProgress);
 })();
