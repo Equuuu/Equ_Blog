@@ -1,34 +1,37 @@
-<section class="site-hero">
-  <nav class="site-nav">
-    <a href="#最近更新">最近更新</a>
-    <a href="#读书笔记">读书笔记</a>
-    <a href="https://raw.githubusercontent.com/Equuuu/Equ_Blog/main/feed.xml">RSS</a>
-    <a href="https://github.com/Equuuu/Equ_Blog">GitHub</a>
-  </nav>
-  <p class="site-kicker">Digital garden / notes / essays</p>
-  <h1>Equ's Blog</h1>
-  <p class="site-subtitle">阅读、生活、技术与一些短暂但明亮的记录。</p>
-  <div class="site-tags">
-    <span>阅读</span>
-    <span>生活</span>
-    <span>技术</span>
-    <span>花园</span>
-  </div>
-</section>
+<h1 align="center">Dear Yoko</h1>
 
-<p class="site-intro">这里整理阅读、生活、技术和日常观察。文章来自 GitHub Issues，并由 GitHub Actions 自动归档。</p>
+<p align="center">彷佛像水面泡沫的短暂光亮</p>
 
+<p align="center">
+  <a href="#最近更新">最近更新</a> &nbsp;·&nbsp;
+  <a href="#生前所述">生前所述</a> &nbsp;·&nbsp;
+  <a href="#读书笔记">读书笔记</a> &nbsp;·&nbsp;
+  <a href="https://raw.githubusercontent.com/Equuuu/Equ_Blog/main/feed.xml">RSS</a> &nbsp;·&nbsp;
+  <a href="https://github.com/Equuuu">GitHub</a>
+</p>
+
+<p align="center">Digital garden / notes / essays</p>
+
+<p align="center">
+  <sub>阅读</sub> &nbsp;·&nbsp; <sub>生活</sub> &nbsp;·&nbsp; <sub>技术</sub> &nbsp;·&nbsp; <sub>花园</sub>
+</p>
+<p align="center">这里记录阅读、生活、技术、我们曾种植的蜀葵，以及一些短暂但明亮的东西。</p>
+
+---
 
 ## 最近更新
 
-<article class="post-item"><a class="post-title" href="https://github.com/Equuuu/Equ_Blog/issues/14">比特花园（蜀葵季）</a><time class="post-date">2024-05-08</time></article>
-<article class="post-item"><a class="post-title" href="https://github.com/Equuuu/Equ_Blog/issues/4">地球生存录</a><time class="post-date">2023-05-14</time></article>
+- [比特花园（蜀葵季）](https://github.com/Equuuu/Equ_Blog/issues) · 2024-05-08
+- [地球生存录](https://github.com/Equuuu/Equ_Blog/issues) · 2023-05-14
 
+---
 
 ## 生前所述
 
-<article class="post-item"><a class="post-title" href="https://github.com/Equuuu/Equ_Blog/issues/4">地球生存录</a><time class="post-date">2023-05-14</time></article>
+- [地球生存录](https://github.com/Equuuu/Equ_Blog/issues) · 2023-05-14
+
+---
 
 ## 读书笔记
 
-<article class="post-item"><a class="post-title" href="https://github.com/Equuuu/Equ_Blog/issues/14">比特花园（蜀葵季）</a><time class="post-date">2024-05-08</time></article>
+- [比特花园（蜀葵季）](https://github.com/Equuuu/Equ_Blog/issues) · 2024-05-08
