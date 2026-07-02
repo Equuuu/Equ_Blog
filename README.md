@@ -2,7 +2,7 @@
 
 # Equ's Blog
 
-仿佛像水面泡沫的短暂光亮。
+<p align="center">彷佛像水面泡沫的短暂光亮</p>
 
 [最近更新](#最近更新) · [读书笔记](#读书笔记) · [RSS Feed](https://raw.githubusercontent.com/Equuuu/Equ_Blog/main/feed.xml) · [GitHub](https://github.com/Equuuu/Equ_Blog)
 
