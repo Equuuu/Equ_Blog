@@ -150,6 +150,7 @@ def render_static_issue(owner, repo, issue, comments):
         extensions=["extra", "sane_lists"],
     )
     root_prefix = "../.."
+    reading_assets_prefix = "../../site-overrides/static"
 
     return f"""<!doctype html>
 <html lang="zh-CN">
@@ -158,9 +159,9 @@ def render_static_issue(owner, repo, issue, comments):
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{html.escape(title)} · Equ's Blog</title>
   <meta name="description" content="由 GitHub Issues 自动同步生成的阅读页">
-  <link rel="stylesheet" href="{root_prefix}/assets/css/home.css">
+  <link rel="stylesheet" href="{reading_assets_prefix}/css/equ.css">
   <link rel="alternate" type="application/atom+xml" title="Equ's Blog" href="{root_prefix}/feed.xml">
-  <script defer src="{root_prefix}/assets/js/home.js"></script>
+  <script defer src="{reading_assets_prefix}/js/equ.js"></script>
 </head>
 <body>
   <div class="reading-progress" aria-hidden="true"></div>

@@ -99,7 +99,7 @@ def get_issue_page_url(issue):
     if not match:
         return issue.html_url
     owner, repo, number = match.groups()
-    return f"https://{owner}.github.io/{repo}/issue-{number}/"
+    return f"https://{owner}.github.io/{repo}/issues/issue-{number}/"
 
 
 def login(token):
