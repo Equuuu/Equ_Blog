@@ -272,7 +272,10 @@ def get_to_generate_issues(repo, dir_name, issue_number=None):
         if int(i.number) not in generated_issues_numbers
     ]
     if issue_number:
-        to_generate_issues.append(repo.get_issue(int(issue_number)))
+        try:
+            to_generate_issues.append(repo.get_issue(int(issue_number)))
+        except Exception:
+            pass
     return to_generate_issues
 
 

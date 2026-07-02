@@ -2,6 +2,7 @@
 import html
 import json
 import os
+import shutil
 import sys
 import time
 from pathlib import Path
@@ -10,6 +11,8 @@ from urllib.request import Request, urlopen
 
 
 API_ROOT = "https://api.github.com"
+STATIC_ISSUES_DIR = "issues"
+ISSUE_SLUG_PREFIX = "issue-"
 HOME_ABOUT_TEXT = (
     "这个博客由 GitHub Issues 自动整理。在这里我想留下这段话，宇宙如果放任不管，就会朝着散乱的方向发展，"
     "而我们却通过修复身体、整理信息来对抗这个宇宙的法则，正是这种对抗让我们活了下来，而对抗的痕迹则以记忆、"
@@ -65,6 +68,14 @@ def toml_array(values):
 
 def issue_html_url(owner, repo, number):
     return f"https://github.com/{owner}/{repo}/issues/{number}"
+
+
+def issue_slug(number):
+    return f"{ISSUE_SLUG_PREFIX}{number}"
+
+
+def static_issue_href(number):
+    return f"{STATIC_ISSUES_DIR}/{issue_slug(number)}/"
 
 
 def format_date(value):
@@ -138,6 +149,7 @@ def render_static_issue(owner, repo, issue, comments):
         output_format="html5",
         extensions=["extra", "sane_lists"],
     )
+    root_prefix = "../.."
 
     return f"""<!doctype html>
 <html lang="zh-CN">
@@ -146,18 +158,18 @@ def render_static_issue(owner, repo, issue, comments):
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{html.escape(title)} · Equ's Blog</title>
   <meta name="description" content="由 GitHub Issues 自动同步生成的阅读页">
-  <link rel="stylesheet" href="../assets/css/home.css">
-  <link rel="alternate" type="application/atom+xml" title="Equ's Blog" href="../feed.xml">
-  <script defer src="../assets/js/home.js"></script>
+  <link rel="stylesheet" href="{root_prefix}/assets/css/home.css">
+  <link rel="alternate" type="application/atom+xml" title="Equ's Blog" href="{root_prefix}/feed.xml">
+  <script defer src="{root_prefix}/assets/js/home.js"></script>
 </head>
 <body>
   <div class="reading-progress" aria-hidden="true"></div>
   <header class="site-header">
-    <a class="brand" href="../">Equ</a>
+    <a class="brand" href="{root_prefix}/">Equ</a>
     <nav class="nav" aria-label="Primary navigation">
-      <a href="../">首页</a>
-      <a href="../#latest">最近更新</a>
-      <a href="../feed.xml">RSS</a>
+      <a href="{root_prefix}/">首页</a>
+      <a href="{root_prefix}/#latest">最近更新</a>
+      <a href="{root_prefix}/feed.xml">RSS</a>
       <a href="https://github.com/{html.escape(owner)}/{html.escape(repo)}">GitHub</a>
     </nav>
     <button class="music-toggle" type="button" aria-label="播放巴赫音乐" aria-pressed="false" data-music-src="https://upload.wikimedia.org/wikipedia/commons/transcoded/4/4b/Bach_-_Cello_Suite_no._1_in_G_major%2C_BWV_1007_-_IV._Sarabande.ogg/Bach_-_Cello_Suite_no._1_in_G_major%2C_BWV_1007_-_IV._Sarabande.ogg.mp3">
@@ -174,7 +186,7 @@ def render_static_issue(owner, repo, issue, comments):
     <article class="article reading-article">
       <header class="article-header">
         <div class="article-kicker">
-          <a class="back-link" href="../">← 返回首页</a>
+          <a class="back-link" href="{root_prefix}/">← 返回首页</a>
           <span>Issue archive</span>
         </div>
         <h1>{html.escape(title)}</h1>
@@ -191,7 +203,7 @@ def render_static_issue(owner, repo, issue, comments):
       </div>
 
       <footer class="article-footer">
-        <a class="button" href="../">回到首页</a>
+        <a class="button" href="{root_prefix}/">回到首页</a>
         <a class="issue-link" href="{issue_html_url(owner, repo, number)}">在 GitHub Issue 中查看原文</a>
       </footer>
     </article>
@@ -238,7 +250,7 @@ def render_static_home(owner, repo, issues):
             cards.append(
                 f"""            <article class="post-card" data-search="{html.escape(search_text)}">
               <div>
-                <a class="post-title" href="issue-{issue['number']}/">{html.escape(title)}</a>
+                <a class="post-title" href="{static_issue_href(issue['number'])}">{html.escape(title)}</a>
               </div>
               <time datetime="{date}">{date}</time>
             </article>"""
@@ -352,18 +364,38 @@ def write_issue_pages(owner, repo, output_dir, token=None, state="open", static_
     output_path = Path(output_dir)
     output_path.mkdir(parents=True, exist_ok=True)
     static_output_path = Path(static_output_dir) if static_output_dir else None
+    visible_issues = [issue for issue in issues if "pull_request" not in issue]
+    expected_issue_slugs = {issue_slug(issue["number"]) for issue in visible_issues}
+
+    for existing_markdown in output_path.glob(f"{ISSUE_SLUG_PREFIX}*.md"):
+        if existing_markdown.stem not in expected_issue_slugs:
+            existing_markdown.unlink()
+
+    if static_output_path:
+        issues_root = static_output_path / STATIC_ISSUES_DIR
+        issues_root.mkdir(parents=True, exist_ok=True)
+
+        for existing_issue_dir in issues_root.iterdir():
+            if (
+                existing_issue_dir.is_dir()
+                and existing_issue_dir.name.startswith(ISSUE_SLUG_PREFIX)
+                and existing_issue_dir.name not in expected_issue_slugs
+            ):
+                shutil.rmtree(existing_issue_dir)
+
+        for legacy_issue_dir in static_output_path.iterdir():
+            if legacy_issue_dir.is_dir() and legacy_issue_dir.name.startswith(ISSUE_SLUG_PREFIX):
+                shutil.rmtree(legacy_issue_dir)
 
     written = 0
-    for issue in issues:
-        if "pull_request" in issue:
-            continue
+    for issue in visible_issues:
         number = issue["number"]
         comments_url = f"{API_ROOT}/repos/{owner}/{repo}/issues/{number}/comments"
         comments = collect_paginated(comments_url, token=token)
         markdown = render_zola_issue(owner, repo, issue, comments)
-        (output_path / f"issue-{number}.md").write_text(markdown, encoding="utf-8")
+        (output_path / f"{issue_slug(number)}.md").write_text(markdown, encoding="utf-8")
         if static_output_path:
-            issue_dir = static_output_path / f"issue-{number}"
+            issue_dir = static_output_path / STATIC_ISSUES_DIR / issue_slug(number)
             issue_dir.mkdir(parents=True, exist_ok=True)
             (issue_dir / "index.html").write_text(
                 render_static_issue(owner, repo, issue, comments),
@@ -387,7 +419,10 @@ def parse_args():
     parser.add_argument("--user", required=True, help="GitHub owner")
     parser.add_argument("--repo", required=True, help="GitHub repository")
     parser.add_argument("--output", default="output/content", help="Zola content directory")
-    parser.add_argument("--static-output", help="Optional static site root for issue-N/index.html")
+    parser.add_argument(
+        "--static-output",
+        help="Optional static site root for issues/issue-N/index.html",
+    )
     parser.add_argument("--state", default="open", choices=["open", "closed", "all"])
     return parser.parse_args()
 
