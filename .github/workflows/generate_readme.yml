@@ -50,6 +50,6 @@ jobs:
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git add -A -- README.md feed.xml index.html BACKUP issues 'issue-*'
+          git add -A -- README.md feed.xml index.html BACKUP issues
           git commit -m 'update blog index' || echo "nothing to commit"
           git push || echo "nothing to push"
