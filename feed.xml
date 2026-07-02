@@ -1,34 +1,4 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<feed xmlns="http://www.w3.org/2005/Atom"><id>https://github.com/Equuuu/Equ_Blog</id><title>RSS feed of Equuuu's Equ_Blog</title><updated>2026-07-02T00:22:53.878025+00:00</updated><link href="https://github.com/Equuuu/Equ_Blog"/><link href="https://raw.githubusercontent.com/Equuuu/Equ_Blog/main/feed.xml" rel="self"/><generator uri="https://lkiesow.github.io/python-feedgen" version="1.0.0">python-feedgen</generator><entry><id>https://github.com/Equuuu/Equ_Blog/issues/15</id><title>AI测试</title><updated>2026-07-02T00:22:54.197329+00:00</updated><content type="html"><![CDATA[<h1 align="center">Dear Yoko</h1>
-<p align="center">彷佛像水面泡沫的短暂光亮</p>
-<p align="center">
-  <a href="#最近更新">最近更新</a> &nbsp;·&nbsp;
-  <a href="#生前所述">生前所述</a> &nbsp;·&nbsp;
-  <a href="#读书笔记">读书笔记</a> &nbsp;·&nbsp;
-  <a href="https://raw.githubusercontent.com/Equuuu/Equ_Blog/main/feed.xml">RSS</a> &nbsp;·&nbsp;
-  <a href="https://github.com/Equuuu">GitHub</a>
-</p>
-<p align="center">Digital garden / notes / essays</p>
-<p align="center">
-  <sub>阅读</sub> &nbsp;·&nbsp; <sub>生活</sub> &nbsp;·&nbsp; <sub>技术</sub> &nbsp;·&nbsp; <sub>花园</sub>
-</p>
-<p align="center">这里记录阅读、生活、技术、我们曾种植的蜀葵，以及一些短暂但明亮的东西。</p>
-<hr />
-<h2>最近更新</h2>
-<ul>
-<li><a href="https://github.com/Equuuu/Equ_Blog/issues">比特花园（蜀葵季）</a> · 2024-05-08</li>
-<li><a href="https://github.com/Equuuu/Equ_Blog/issues">地球生存录</a> · 2023-05-14</li>
-</ul>
-<hr />
-<h2>生前所述</h2>
-<ul>
-<li><a href="https://github.com/Equuuu/Equ_Blog/issues">地球生存录</a> · 2023-05-14</li>
-</ul>
-<hr />
-<h2>读书笔记</h2>
-<ul>
-<li><a href="https://github.com/Equuuu/Equ_Blog/issues">比特花园（蜀葵季）</a> · 2024-05-08</li>
-</ul>
-]]></content><link href="https://Equuuu.github.io/Equ_Blog/issue-15/"/><category term="读书笔记"/><published>2026-07-02T00:22:34+00:00</published></entry><entry><id>https://github.com/Equuuu/Equ_Blog/issues/14</id><title>比特花园（蜀葵季）</title><updated>2026-07-02T00:22:54.320003+00:00</updated><content type="html"><![CDATA[<p>为你读书。</p>
-]]></content><link href="https://Equuuu.github.io/Equ_Blog/issue-14/"/><category term="读书笔记"/><published>2024-05-08T07:09:07+00:00</published></entry><entry><id>https://github.com/Equuuu/Equ_Blog/issues/4</id><title>地球生存录</title><updated>2026-07-02T00:22:54.426363+00:00</updated><content type="html"><![CDATA[<h1>记录自己的碎碎念</h1>
+<feed xmlns="http://www.w3.org/2005/Atom"><id>https://github.com/Equuuu/Equ_Blog</id><title>RSS feed of Equuuu's Equ_Blog</title><updated>2026-07-02T00:44:19.999501+00:00</updated><link href="https://github.com/Equuuu/Equ_Blog"/><link href="https://raw.githubusercontent.com/Equuuu/Equ_Blog/main/feed.xml" rel="self"/><generator uri="https://lkiesow.github.io/python-feedgen" version="1.0.0">python-feedgen</generator><entry><id>https://github.com/Equuuu/Equ_Blog/issues/14</id><title>比特花园（蜀葵季）</title><updated>2026-07-02T00:44:20.337428+00:00</updated><content type="html"><![CDATA[<p>为你读书。</p>
+]]></content><link href="https://Equuuu.github.io/Equ_Blog/issue-14/"/><category term="读书笔记"/><published>2024-05-08T07:09:07+00:00</published></entry><entry><id>https://github.com/Equuuu/Equ_Blog/issues/4</id><title>地球生存录</title><updated>2026-07-02T00:44:20.459581+00:00</updated><content type="html"><![CDATA[<h1>记录自己的碎碎念</h1>
 ]]></content><link href="https://Equuuu.github.io/Equ_Blog/issue-4/"/><category term="生前所述"/><published>2023-05-14T12:11:20+00:00</published></entry></feed>

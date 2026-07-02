@@ -15,7 +15,6 @@
 
 ## 最近更新
 
-- [AI测试](https://Equuuu.github.io/Equ_Blog/issue-15/) · 2026-07-02
 - [比特花园（蜀葵季）](https://Equuuu.github.io/Equ_Blog/issue-14/) · 2024-05-08
 - [地球生存录](https://Equuuu.github.io/Equ_Blog/issue-4/) · 2023-05-14
 
@@ -23,5 +22,7 @@
 ## 生前所述
 
 - [地球生存录](https://Equuuu.github.io/Equ_Blog/issue-4/) · 2023-05-14
-- [AI测试](https://Equuuu.github.io/Equ_Blog/issue-15/) · 2026-07-02
+
+## 读书笔记
+
 - [比特花园（蜀葵季）](https://Equuuu.github.io/Equ_Blog/issue-14/) · 2024-05-08
