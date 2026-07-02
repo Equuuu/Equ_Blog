@@ -14,7 +14,7 @@ BACKUP_DIR = "BACKUP"
 ANCHOR_NUMBER = 5
 RECENT_ISSUE_LIMIT = 2
 
-TOP_ISSUES_LABELS = ["Top"]
+TOP_ISSUES_LABELS = ["TOP"]
 TODO_ISSUES_LABELS = ["TODO"]
 FRIENDS_LABELS = ["Friends"]
 ABOUT_LABELS = ["About"]
@@ -227,16 +227,18 @@ def add_md_label(repo, md_path, me):
             if label.name in IGNORE_LABELS:
                 continue
 
-            issues = get_issues_from_label(repo, label)
-            if not issues.totalCount:
+            issues = sorted(
+                list(get_issues_from_label(repo, label)),
+                key=lambda item: item.created_at,
+                reverse=True,
+            )
+            visible_issues = [issue for issue in issues if issue and is_me(issue, me)]
+            if not visible_issues:
                 continue
 
             handle.write("\n## " + label.name + "\n\n")
-            visible_issues = sorted(issues, key=lambda item: item.created_at, reverse=True)
             count = 0
             for issue in visible_issues:
-                if not issue or not is_me(issue, me):
-                    continue
                 if count == ANCHOR_NUMBER:
                     handle.write("<details><summary>显示更多</summary>\n\n")
                 add_issue_info(issue, handle)
