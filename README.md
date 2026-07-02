@@ -15,13 +15,12 @@
 
 ## 最近更新
 
-- [谢谢你的来信](https://Equuuu.github.io/Equ_Blog/issues/issue-17/) · 2026-07-02
 - [比特花园（蜀葵季）](https://Equuuu.github.io/Equ_Blog/issues/issue-14/) · 2024-05-08
+- [地球生存录](https://Equuuu.github.io/Equ_Blog/issues/issue-4/) · 2023-05-14
 
 
 ## 生前所述
 
-- [谢谢你的来信](https://Equuuu.github.io/Equ_Blog/issues/issue-17/) · 2026-07-02
 - [地球生存录](https://Equuuu.github.io/Equ_Blog/issues/issue-4/) · 2023-05-14
 
 ## 读书笔记
