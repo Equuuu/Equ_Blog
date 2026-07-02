@@ -2,7 +2,7 @@
 
 # Equ's Blog
 
-<p align="center">彷佛像水面泡沫的短暂光亮</p>
+仿佛像水面泡沫的短暂光亮。
 
 [最近更新](#最近更新) · [读书笔记](#读书笔记) · [RSS Feed](https://raw.githubusercontent.com/Equuuu/Equ_Blog/main/feed.xml) · [GitHub](https://github.com/Equuuu/Equ_Blog)
 
@@ -10,7 +10,7 @@
 
 ---
 
-<p align="center">这里记录阅读、生活、技术、我们曾种植的蜀葵，以及一些短暂但明亮的东西。</p>
+这里记录阅读、生活、技术、我们曾种植的蜀葵，以及一些短暂但明亮的东西。
 
 
 ## 最近更新
