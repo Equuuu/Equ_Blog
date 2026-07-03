@@ -40,18 +40,28 @@
   {% set tag_taxonomy = get_taxonomy(kind="tags") %}
   <div class="post-groups">
     {% for term in tag_taxonomy.items %}
+      {% set term_pages = term.pages | sort(attribute="date") | reverse %}
       <details class="post-group" data-group-search="{{ term.name }}">
         <summary class="post-group-summary">
+          {% for page in term_pages %}
+            {% if loop.first %}
+              <span class="post-group-year">{{ page.date | date(format="%Y") }}</span>
+              <span class="post-group-node" aria-hidden="true"></span>
+            {% endif %}
+          {% endfor %}
           <span class="post-group-title">{{ term.name }}</span>
           <span class="post-group-count">{{ term.pages | length }} 篇</span>
         </summary>
-        <div class="post-list post-list-nested">
-          {% for page in term.pages %}
-            <article class="post-card" data-search="{{ page.title }} {{ term.name }}{% if page.taxonomies.tags %} {% for tag in page.taxonomies.tags %}{{ tag }} {% endfor %}{% endif %}">
+        <div class="post-list post-list-nested post-timeline">
+          {% for page in term_pages %}
+            <article class="post-card" data-search="{{ page.title }} {% if page.extra.summary %}{{ page.extra.summary }}{% endif %} {{ term.name }}{% if page.taxonomies.tags %} {% for tag in page.taxonomies.tags %}{{ tag }} {% endfor %}{% endif %}">
+              <time class="post-card-date" datetime="{{ page.date }}">{{ page.date | date(format="%Y.%m.%d") }}</time>
               <div>
                 <a class="post-title" href="{{ page.permalink }}">{{ page.title }}</a>
+                {% if page.extra.summary %}
+                  <p class="post-excerpt">{{ page.extra.summary }}</p>
+                {% endif %}
               </div>
-              <time datetime="{{ page.date }}">{{ page.date | date(format="%Y-%m-%d") }}</time>
             </article>
           {% endfor %}
         </div>

@@ -1,5 +1,9 @@
 :root {
   color-scheme: light;
+  --body-sans: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", "Noto Sans SC", "Microsoft YaHei", sans-serif;
+  --display-serif: "Noto Serif SC", "Source Han Serif SC", "Songti SC",
+    "STSong", "SimSun", Georgia, serif;
   --paper: #f6f2ea;
   --surface: #fffdf8;
   --ink: #17202a;
@@ -42,8 +46,7 @@ body {
   background:
     linear-gradient(180deg, rgba(237, 231, 219, 0.92) 0, rgba(246, 242, 234, 0.82) 360px),
     var(--paper);
-  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
-    "Segoe UI", "Noto Sans SC", "Microsoft YaHei", sans-serif;
+  font-family: var(--body-sans);
   line-height: 1.75;
   transition: color 180ms ease, background 180ms ease;
 }
@@ -437,21 +440,29 @@ main {
 
 .post-group-summary {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) auto 22px;
-  gap: 16px;
+  grid-template-columns: 82px 24px 20px minmax(0, 1fr) auto 22px;
+  gap: 14px;
   align-items: center;
   padding: 22px 0;
   cursor: pointer;
   list-style: none;
+  outline: none;
 }
 
 .post-group-summary::-webkit-details-marker {
   display: none;
 }
 
+.post-group-summary:focus-visible {
+  border-radius: 8px;
+  outline: 1px solid color-mix(in srgb, var(--gold) 64%, transparent);
+  outline-offset: 5px;
+}
+
 .post-group-summary::after {
   content: "+";
   display: inline-grid;
+  grid-column: 6;
   width: 22px;
   height: 22px;
   place-items: center;
@@ -467,16 +478,46 @@ main {
   content: "-";
 }
 
+.post-group-year {
+  grid-column: 1;
+  color: var(--gold);
+  font-family: var(--display-serif);
+  font-size: 1.62rem;
+  font-weight: 560;
+  letter-spacing: 0;
+  line-height: 1.1;
+  font-variant-numeric: lining-nums tabular-nums;
+}
+
+.post-group-node {
+  grid-column: 2;
+  position: relative;
+  display: inline-grid;
+  width: 18px;
+  height: 18px;
+  place-items: center;
+}
+
+.post-group-node::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--gold);
+  box-shadow: 0 0 0 5px rgba(184, 145, 90, 0.12);
+}
+
 .post-group-title {
+  grid-column: 4;
   overflow-wrap: anywhere;
-  font-family: "Songti SC", "STSong", "Noto Serif SC", "Source Han Serif SC",
-    Georgia, serif;
-  font-size: clamp(1.35rem, 2.5vw, 2rem);
+  font-family: var(--display-serif);
+  font-size: 1.84rem;
   font-weight: 520;
   line-height: 1.28;
 }
 
 .post-group-count {
+  grid-column: 5;
   color: var(--soft);
   font-size: 14px;
   font-weight: 700;
@@ -484,12 +525,22 @@ main {
 }
 
 .post-list-nested {
-  margin-left: 54px;
+  margin-left: 108px;
   border-top: 1px solid var(--line);
 }
 
+.post-timeline {
+  position: relative;
+  max-height: 340px;
+  overflow-y: auto;
+  padding-right: 12px;
+  border-left: 1px solid var(--line);
+  scrollbar-color: var(--line-strong) transparent;
+  scrollbar-width: thin;
+}
+
 .post-list-nested .post-card {
-  padding: 18px 0;
+  padding: 20px 0 20px 26px;
 }
 
 .post-list-nested .post-card:last-child {
@@ -497,22 +548,38 @@ main {
 }
 
 .post-list-nested .post-title {
-  font-size: 18px;
+  font-family: var(--body-sans);
+  font-size: 17px;
+  font-weight: 680;
 }
 
 .post-card {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  gap: 28px;
-  align-items: start;
+  grid-template-columns: 104px minmax(0, 1fr);
+  gap: 14px;
+  align-items: baseline;
   padding: 24px 0;
   border-bottom: 1px solid var(--line);
+  position: relative;
+}
+
+.post-timeline .post-card::before {
+  content: "";
+  position: absolute;
+  top: 27px;
+  left: -5px;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--gold);
+  box-shadow: 0 0 0 5px rgba(184, 145, 90, 0.12);
 }
 
 .post-title {
   color: var(--ink);
-  font-size: 19px;
-  font-weight: 760;
+  font-size: 18px;
+  font-weight: 680;
+  line-height: 1.42;
   text-decoration: none;
 }
 
@@ -520,11 +587,31 @@ main {
   color: var(--blue);
 }
 
-.post-card time {
-  color: var(--soft);
-  font-size: 14px;
-  font-variant-numeric: tabular-nums;
+.post-excerpt {
+  max-width: 620px;
+  margin: 8px 0 0;
+  color: var(--muted);
+  font-family: var(--body-sans);
+  font-size: 13.5px;
+  line-height: 1.72;
+}
+
+.post-card-date {
+  display: block;
+  color: color-mix(in srgb, var(--soft) 82%, var(--paper));
+  font-family: var(--body-sans);
+  font-size: 13.5px;
+  font-weight: 560;
+  font-variant-numeric: lining-nums tabular-nums;
+  letter-spacing: 0;
+  line-height: 1.42;
   white-space: nowrap;
+}
+
+.post-card-date small {
+  color: color-mix(in srgb, var(--soft) 72%, var(--paper));
+  font-size: 12px;
+  font-weight: 700;
 }
 
 .post-tags {
@@ -663,22 +750,58 @@ main {
   }
 
   .post-card {
-    grid-template-columns: 1fr;
+    grid-template-columns: 78px minmax(0, 1fr);
     gap: 6px;
   }
 
   .post-group-summary {
-    grid-template-columns: minmax(0, 1fr) auto 22px;
-    gap: 10px;
+    grid-template-columns: 48px 14px 14px minmax(0, 1fr) auto 22px;
+    gap: 6px;
     padding: 18px 0;
   }
 
+  .post-group-year {
+    font-size: 1.14rem;
+  }
+
+  .post-group-node {
+    width: 14px;
+    height: 14px;
+  }
+
+  .post-group-node::before {
+    width: 7px;
+    height: 7px;
+    box-shadow: 0 0 0 3px rgba(184, 145, 90, 0.12);
+  }
+
+  .post-group-title {
+    font-size: 1.2rem;
+  }
+
   .post-list-nested {
-    margin-left: 0;
+    margin-left: 61px;
+  }
+
+  .post-timeline {
+    max-height: 320px;
+    padding-right: 6px;
+  }
+
+  .post-list-nested .post-card {
+    padding-left: 13px;
   }
 
   .post-list-nested .post-title {
-    font-size: 17px;
+    font-size: 15.5px;
+  }
+
+  .post-excerpt {
+    font-size: 12.8px;
+  }
+
+  .post-card-date {
+    font-size: 12px;
   }
 
   .site-footer {

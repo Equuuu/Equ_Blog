@@ -2,6 +2,7 @@
 import html
 import json
 import os
+import re
 import shutil
 import sys
 import time
@@ -85,6 +86,42 @@ def format_date(value):
     return (value or time.strftime("%Y-%m-%d"))[:10]
 
 
+def format_year(value):
+    return format_date(value).split("-", 1)[0]
+
+
+def format_timeline_date(value):
+    return format_date(value).replace("-", ".")
+
+
+def strip_markdown(value):
+    text = value or ""
+    text = re.sub(r"!\[[^\]]*]\([^)]+\)", "", text)
+    text = re.sub(r"\[([^\]]+)]\([^)]+\)", r"\1", text)
+    text = re.sub(r"`([^`]+)`", r"\1", text)
+    text = re.sub(r"^\s{0,3}#{1,6}\s*", "", text, flags=re.MULTILINE)
+    text = re.sub(r"^\s{0,3}[-*_]{3,}\s*$", " ", text, flags=re.MULTILINE)
+    text = re.sub(r"<[^>]+>", " ", text)
+    text = re.sub(r"\s+", " ", text)
+    return text.strip()
+
+
+def clip_text(value, limit=88):
+    text = strip_markdown(value)
+    if len(text) <= limit:
+        return text
+    return text[:limit].rstrip("，。；、,. ;") + "……"
+
+
+def issue_summary(issue, limit=88):
+    body = issue.get("body") or ""
+    for paragraph in re.split(r"\n\s*\n", body):
+        summary = clip_text(paragraph, limit=limit)
+        if summary:
+            return summary
+    return clip_text(issue.get("title") or "", limit=limit)
+
+
 def floor_label(label, user, created_at):
     author = user.get("login", "unknown") if user else "unknown"
     date = format_date(created_at)
@@ -131,6 +168,7 @@ def render_zola_issue(owner, repo, issue, comments):
         f"issue_url = {toml_string(issue_html_url(owner, repo, number))}",
         f"issue_number = {number}",
         f"comment_count = {len(comments)}",
+        f"summary = {toml_string(issue_summary(issue))}",
         "+++",
         "",
     ]
@@ -273,23 +311,29 @@ def render_static_home(owner, repo, issues):
             labels = issue_labels(issue)
             title = issue.get("title") or f"Issue {issue['number']}"
             date = format_date(issue.get("created_at"))
-            search_text = " ".join([title, *labels])
+            summary = issue_summary(issue)
+            search_text = " ".join([title, summary, *labels])
             cards.append(
                 f"""            <article class="post-card" data-search="{html.escape(search_text)}">
+              <time class="post-card-date" datetime="{date}">{format_timeline_date(date)}</time>
               <div>
                 <a class="post-title" href="{static_issue_href(issue['number'])}">{html.escape(title)}</a>
+                <p class="post-excerpt">{html.escape(summary)}</p>
               </div>
-              <time datetime="{date}">{date}</time>
             </article>"""
             )
 
+        latest_issue = group_issues[0]
+        latest_date = format_date(latest_issue.get("created_at"))
         group_parts.append(
             f"""        <details class="post-group" data-group-search="{html.escape(label)}">
           <summary class="post-group-summary">
+            <span class="post-group-year">{format_year(latest_date)}</span>
+            <span class="post-group-node" aria-hidden="true"></span>
             <span class="post-group-title">{html.escape(label)}</span>
             <span class="post-group-count">{len(group_issues)} 篇</span>
           </summary>
-          <div class="post-list post-list-nested">
+          <div class="post-list post-list-nested post-timeline">
 {chr(10).join(cards)}
           </div>
         </details>"""
