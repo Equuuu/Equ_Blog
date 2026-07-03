@@ -1,7 +1,6 @@
 (() => {
   const root = document.documentElement;
   const toggle = document.querySelector(".theme-toggle");
-  const toggleMark = document.querySelector(".theme-toggle-mark");
   const toggleLabel = document.querySelector(".theme-toggle-label");
   const searchInput = document.querySelector(".blog-search-input");
   const clearButton = document.querySelector(".search-clear");
@@ -11,6 +10,7 @@
   const storageKey = "equ-blog-theme";
   const progress = document.querySelector(".reading-progress");
   const musicToggle = document.querySelector(".music-toggle");
+  const musicLabel = document.querySelector(".music-toggle-label");
   const musicStorageKey = "equ-blog-music";
   let musicAudio = null;
 
@@ -37,8 +37,10 @@
   const paintThemeButton = (theme) => {
     const isDark = theme === "dark";
     toggle?.setAttribute("aria-pressed", String(isDark));
-    if (toggleMark) {
-      toggleMark.textContent = isDark ? "日" : "夜";
+    if (toggle) {
+      const label = isDark ? "切换到日间主题" : "切换到夜间主题";
+      toggle.setAttribute("aria-label", label);
+      toggle.setAttribute("title", label);
     }
     if (toggleLabel) {
       toggleLabel.textContent = isDark ? "日间" : "夜间";
@@ -59,8 +61,13 @@
   });
 
   const setMusicState = (isPlaying) => {
+    const label = isPlaying ? "暂停巴赫音乐" : "播放巴赫音乐";
     musicToggle?.setAttribute("aria-pressed", String(isPlaying));
-    musicToggle?.setAttribute("aria-label", isPlaying ? "暂停巴赫音乐" : "播放巴赫音乐");
+    musicToggle?.setAttribute("aria-label", label);
+    musicToggle?.setAttribute("title", label);
+    if (musicLabel) {
+      musicLabel.textContent = label;
+    }
   };
 
   const storeMusicState = (isPlaying) => {

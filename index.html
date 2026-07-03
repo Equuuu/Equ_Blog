@@ -18,14 +18,37 @@
       <a href="feed.xml">RSS</a>
       <a href="https://github.com/Equuuu/Equ_Blog">GitHub</a>
     </nav>
-    <button class="music-toggle" type="button" aria-label="播放巴赫音乐" aria-pressed="false" data-music-src="https://upload.wikimedia.org/wikipedia/commons/transcoded/4/4b/Bach_-_Cello_Suite_no._1_in_G_major%2C_BWV_1007_-_IV._Sarabande.ogg/Bach_-_Cello_Suite_no._1_in_G_major%2C_BWV_1007_-_IV._Sarabande.ogg.mp3">
-      <span class="music-toggle-dot" aria-hidden="true"></span>
-      <span class="music-toggle-label">Bach</span>
-    </button>
-    <button class="theme-toggle" type="button" aria-label="切换深浅主题" aria-pressed="false">
-      <span class="theme-toggle-mark" aria-hidden="true">夜</span>
-      <span class="theme-toggle-label">夜间</span>
-    </button>
+    <div class="header-actions" aria-label="页面控制">
+      <button class="icon-toggle music-toggle" type="button" aria-label="播放巴赫音乐" aria-pressed="false" title="播放巴赫音乐" data-music-src="https://upload.wikimedia.org/wikipedia/commons/transcoded/4/4b/Bach_-_Cello_Suite_no._1_in_G_major%2C_BWV_1007_-_IV._Sarabande.ogg/Bach_-_Cello_Suite_no._1_in_G_major%2C_BWV_1007_-_IV._Sarabande.ogg.mp3">
+        <span class="control-icon music-toggle-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" focusable="false">
+            <path d="M9 18V5l10-2v13"></path>
+            <circle cx="7" cy="18" r="3"></circle>
+            <circle cx="17" cy="16" r="3"></circle>
+          </svg>
+        </span>
+        <span class="sr-only music-toggle-label">播放巴赫音乐</span>
+      </button>
+      <button class="icon-toggle theme-toggle" type="button" aria-label="切换到夜间主题" aria-pressed="false" title="切换到夜间主题">
+        <span class="control-icon theme-toggle-mark" aria-hidden="true">
+          <svg class="theme-icon theme-icon-moon" viewBox="0 0 24 24" focusable="false">
+            <path d="M21 14.4A8.2 8.2 0 0 1 9.6 3a7 7 0 1 0 11.4 11.4Z"></path>
+          </svg>
+          <svg class="theme-icon theme-icon-sun" viewBox="0 0 24 24" focusable="false">
+            <circle cx="12" cy="12" r="4"></circle>
+            <path d="M12 2v2"></path>
+            <path d="M12 20v2"></path>
+            <path d="m4.93 4.93 1.41 1.41"></path>
+            <path d="m17.66 17.66 1.41 1.41"></path>
+            <path d="M2 12h2"></path>
+            <path d="M20 12h2"></path>
+            <path d="m6.34 17.66-1.41 1.41"></path>
+            <path d="m19.07 4.93-1.41 1.41"></path>
+          </svg>
+        </span>
+        <span class="sr-only theme-toggle-label">夜间</span>
+      </button>
+    </div>
   </header>
 
   <main>
@@ -114,7 +137,9 @@
       <div class="section-heading">
         <p>About</p>
       </div>
-      <p>这个博客由 GitHub Issues 自动整理。在这里我想留下这段话，宇宙如果放任不管，就会朝着散乱的方向发展，而我们却通过修复身体、整理信息来对抗这个宇宙的法则，正是这种对抗让我们活了下来，而对抗的痕迹则以记忆、文化和语言的形式残留在宇宙中，一切都朝着易碎而短暂的方向前进，然而人类却试图保存文化，留下爱与记忆。你说生命是一场苦行，人类需要脱离自己的劣根性，潜在的欲望，自我隐约的虚荣，自以为是的高尚和成功，探索内在的精神。去达到“神”的境界，选择和创造自己在乎的世界，并为这个“执念”而活，不需要过分地努力，只需要融化进自己的身体中。一个无关欲望，无关时代，无关他人的“心愿 执念 风格”。你觉得人是为了一个执念活着的，并因此经历生命的一切。至于它像什么，它像刺入灵魂的长长的柔软的钢筋，无意识地存在着，当不经意忘记和改变时，会感到心碎和疼痛，于是它变成了神性。于是，我爱你。</p>
+      <p>这个博客由 GitHub Issues 自动整理。在这里我想留下这段话：宇宙如果放任不管，就会朝着散乱的方向发展，而我们却通过修复身体、整理信息来对抗这个宇宙的法则。正是这种对抗让我们活了下来，而对抗的痕迹则以记忆、文化和语言的形式残留在宇宙中。</p>
+      <p>一切都朝着易碎而短暂的方向前进，然而人类却试图保存文化，留下爱与记忆。你说生命是一场苦行，人类需要脱离自己的劣根性、潜在的欲望、自我隐约的虚荣、自以为是的高尚和成功，探索内在的精神。去达到“神”的境界，选择和创造自己在乎的世界，并为这个“执念”而活，不需要过分地努力，只需要融化进自己的身体中。</p>
+      <p>一个无关欲望，无关时代，无关他人的“心愿 执念 风格”。你觉得人是为了一个执念活着的，并因此经历生命的一切。至于它像什么，它像刺入灵魂的长长的柔软的钢筋，无意识地存在着，当不经意忘记和改变时，会感到心碎和疼痛，于是它变成了神性。于是，我爱你。</p>
     </section>
   </main>
 
