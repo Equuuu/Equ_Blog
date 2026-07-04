@@ -305,7 +305,13 @@ def render_static_home(owner, repo, issues):
             grouped.setdefault(label, []).append(issue)
 
     group_parts = []
-    for label, group_issues in grouped.items():
+    group_items = sorted(
+        grouped.items(),
+        key=lambda item: max(issue.get("created_at") or "" for issue in item[1]),
+        reverse=True,
+    )
+    for label, group_issues in group_items:
+        group_issues.sort(key=lambda item: item.get("created_at") or "", reverse=True)
         cards = []
         for issue in group_issues:
             labels = issue_labels(issue)
