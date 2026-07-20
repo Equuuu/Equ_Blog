@@ -2,95 +2,97 @@
 
 {% block title %}{{ config.title }}{% endblock title %}
 
+{% block backdrop %}
+  <!-- rear photo plane: complete biosphere photo below the header -->
+  <div class="depth" aria-hidden="true">
+    <div class="depth-shift">
+      <img class="depth-image" src="{{ get_url(path='media/biosphere-wide.png') }}" alt="" width="1536" height="1024" decoding="async" fetchpriority="high">
+    </div>
+  </div>
+
+  <!-- rain + distant lightning: above the photo, below the glass panels -->
+  <canvas class="rain-layer" aria-hidden="true"></canvas>
+{% endblock backdrop %}
+
 {% block content %}
 <section class="hero">
   <div class="hero-copy">
-    <p class="eyebrow">Digital garden / notes / essays</p>
     <h1>彷佛像水面泡沫的短暂光亮</h1>
+    <span class="hero-divider" aria-hidden="true"></span>
     <p class="hero-text">这里有小马的阅读、生活、技术和日常观察，以及曾经我们种植的蜀葵。</p>
-    <div class="hero-actions">
-      <a class="button button-primary" href="#latest">阅读最近更新</a>
-      <a class="button" href="{{ config.base_url }}/tags/">浏览标签</a>
-    </div>
   </div>
-  <aside class="hero-panel" aria-label="Blog summary">
-    <span class="panel-kicker">Archive</span>
-    <strong>{{ paginator.pages | length }}</strong>
-    <span>篇公开记录</span>
-    <div class="theme-list">
-      <span>阅读</span>
-      <span>生活</span>
-      <span>技术</span>
-      <span>花园</span>
-    </div>
-  </aside>
 </section>
 
-<section class="section-block" id="latest">
-  <div class="section-heading">
-    <p>Latest</p>
-  </div>
-  <div class="post-tools" aria-label="文章搜索">
-    <label class="search-field">
-      <span class="sr-only">搜索文章</span>
-      <input class="blog-search-input" type="search" placeholder="搜索文章、标签或关键词" autocomplete="off">
-    </label>
-    <button class="search-clear" type="button" hidden>清除</button>
-  </div>
-  {% set sorted_pages = paginator.pages | sort(attribute="date") | reverse %}
-  {% set_global rendered_tags = [] %}
-  <div class="post-groups">
-    {% for source_page in sorted_pages %}
-      {% if source_page.taxonomies.tags %}
-        {% for tag in source_page.taxonomies.tags %}
-          {% if tag not in rendered_tags %}
-            {% set_global rendered_tags = rendered_tags | concat(with=tag) %}
-            {% set_global tag_count = 0 %}
-            {% for page in sorted_pages %}
-              {% if page.taxonomies.tags and tag in page.taxonomies.tags %}
-                {% set_global tag_count = tag_count + 1 %}
-              {% endif %}
-            {% endfor %}
-            <details class="post-group" data-group-search="{{ tag }}">
-              <summary class="post-group-summary">
-                <span class="post-group-year">{{ source_page.date | date(format="%Y") }}</span>
-                <span class="post-group-node" aria-hidden="true"></span>
-                <span class="post-group-title">{{ tag }}</span>
-                <span class="post-group-count">{{ tag_count }} 篇</span>
-              </summary>
-              <div class="post-list post-list-nested post-timeline">
-                {% for page in sorted_pages %}
-                  {% if page.taxonomies.tags and tag in page.taxonomies.tags %}
-                    <article class="post-card" data-search="{{ page.title }} {% if page.extra.summary %}{{ page.extra.summary }}{% endif %} {{ tag }}{% if page.taxonomies.tags %} {% for page_tag in page.taxonomies.tags %}{{ page_tag }} {% endfor %}{% endif %}">
-                      <time class="post-card-date" datetime="{{ page.date }}">{{ page.date | date(format="%Y.%m.%d") }}</time>
-                      <div>
-                        <a class="post-title" href="{{ page.permalink }}">{{ page.title }}</a>
-                        {% if page.extra.summary %}
-                          <p class="post-excerpt">{{ page.extra.summary }}</p>
-                        {% endif %}
-                      </div>
-                    </article>
-                  {% endif %}
-                {% endfor %}
-              </div>
-            </details>
-          {% endif %}
-        {% endfor %}
+<div class="shell content-stack">
+  <section class="section-block" id="latest">
+    <div class="archive-toolbar">
+      <p class="archive-label">Archive</p>
+      <div class="post-tools" aria-label="文章搜索">
+        <label class="search-field">
+          <span class="sr-only">搜索文章</span>
+          <input class="blog-search-input" type="search" placeholder="搜索文章、标签或关键词" autocomplete="off">
+          <kbd class="search-kbd" aria-hidden="true">/</kbd>
+        </label>
+        <button class="search-clear" type="button" hidden>清除</button>
+      </div>
+    </div>
+    {% set sorted_pages = paginator.pages | sort(attribute="date") | reverse %}
+    {% set_global rendered_tags = [] %}
+    <div class="post-groups">
+      {% for source_page in sorted_pages %}
+        {% if source_page.taxonomies.tags %}
+          {% for tag in source_page.taxonomies.tags %}
+            {% if tag not in rendered_tags %}
+              {% set_global rendered_tags = rendered_tags | concat(with=tag) %}
+              {% set_global tag_count = 0 %}
+              {% for page in sorted_pages %}
+                {% if page.taxonomies.tags and tag in page.taxonomies.tags %}
+                  {% set_global tag_count = tag_count + 1 %}
+                {% endif %}
+              {% endfor %}
+              <details class="post-group" data-group-search="{{ tag }}">
+                <summary class="post-group-summary">
+                  <span class="post-group-year">{{ source_page.date | date(format="%Y") }}</span>
+                  <span class="post-group-node" aria-hidden="true"></span>
+                  <span class="post-group-title">{{ tag }}</span>
+                  <span class="post-group-count">{{ tag_count }} 篇</span>
+                </summary>
+                <div class="post-list post-list-nested post-timeline">
+                  {% for page in sorted_pages %}
+                    {% if page.taxonomies.tags and tag in page.taxonomies.tags %}
+                      <article class="post-card" data-search="{{ page.title }} {% if page.extra.summary %}{{ page.extra.summary }}{% endif %} {{ tag }}{% if page.taxonomies.tags %} {% for page_tag in page.taxonomies.tags %}{{ page_tag }} {% endfor %}{% endif %}">
+                        <time class="post-card-date" datetime="{{ page.date }}">{{ page.date | date(format="%Y.%m.%d") }}</time>
+                        <div>
+                          <a class="post-title" href="{{ page.permalink }}">{{ page.title }}</a>
+                          {% if page.extra.summary %}
+                            <p class="post-excerpt">{{ page.extra.summary }}</p>
+                          {% endif %}
+                        </div>
+                      </article>
+                    {% endif %}
+                  {% endfor %}
+                </div>
+              </details>
+            {% endif %}
+          {% endfor %}
+        {% endif %}
+      {% endfor %}
+      {% if rendered_tags | length == 0 %}
+        <p class="empty">还没有文章。</p>
       {% endif %}
-    {% endfor %}
-    {% if rendered_tags | length == 0 %}
-      <p class="empty">还没有文章。</p>
-    {% endif %}
-  </div>
-  <p class="search-empty" hidden>没有找到匹配的文章。</p>
-</section>
+    </div>
+    <p class="search-empty" hidden>没有找到匹配的文章。</p>
+  </section>
 
-<section class="section-block about-block">
-  <div class="section-heading">
-    <p>About</p>
-  </div>
-  <p>这个博客由 GitHub Issues 自动整理。在这里我想留下这段话：宇宙如果放任不管，就会朝着散乱的方向发展，而我们却通过修复身体、整理信息来对抗这个宇宙的法则。正是这种对抗让我们活了下来，而对抗的痕迹则以记忆、文化和语言的形式残留在宇宙中。</p>
-  <p>一切都朝着易碎而短暂的方向前进，然而人类却试图保存文化，留下爱与记忆。你说生命是一场苦行，人类需要脱离自己的劣根性、潜在的欲望、自我隐约的虚荣、自以为是的高尚和成功，探索内在的精神。去达到“神”的境界，选择和创造自己在乎的世界，并为这个“执念”而活，不需要过分地努力，只需要融化进自己的身体中。</p>
-  <p>一个无关欲望，无关时代，无关他人的“心愿 执念 风格”。你觉得人是为了一个执念活着的，并因此经历生命的一切。至于它像什么，它像刺入灵魂的长长的柔软的钢筋，无意识地存在着，当不经意忘记和改变时，会感到心碎和疼痛，于是它变成了神性。于是，我爱你。</p>
-</section>
+  <section class="section-block about-block" id="about">
+    <div class="section-heading section-heading-solo">
+      <p>About</p>
+    </div>
+    <div class="about-body">
+      <p>这个博客由 GitHub Issues 自动整理。在这里我想留下这段话：宇宙如果放任不管，就会朝着散乱的方向发展，而我们却通过修复身体、整理信息来对抗这个宇宙的法则。正是这种对抗让我们活了下来，而对抗的痕迹则以记忆、文化和语言的形式残留在宇宙中。</p>
+      <p>一切都朝着易碎而短暂的方向前进，然而人类却试图保存文化，留下爱与记忆。你说生命是一场苦行，人类需要脱离自己的劣根性、潜在的欲望、自我隐约的虚荣、自以为是的高尚和成功，探索内在的精神。去达到“神”的境界，选择和创造自己在乎的世界，并为这个“执念”而活，不需要过分地努力，只需要融化进自己的身体中。</p>
+      <p>一个无关欲望，无关时代，无关他人的“心愿 执念 风格”。你觉得人是为了一个执念活着的，并因此经历生命的一切。至于它像什么，它像刺入灵魂的长长的柔软的钢筋，无意识地存在着，当不经意忘记和改变时，会感到心碎和疼痛，于是它变成了神性。于是，我爱你。</p>
+    </div>
+  </section>
+</div>
 {% endblock content %}

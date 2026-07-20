@@ -184,7 +184,8 @@ def render_static_issue(owner, repo, issue, comments):
     date = format_date(issue.get("created_at"))
     comment_count = len(comments)
     labels = [label["name"] for label in issue.get("labels", [])]
-    labels_html = "".join(f"<span>#{html.escape(label)}</span>" for label in labels)
+    # css adds the leading "#" via .article-tags span::before
+    labels_html = "".join(f"<span>{html.escape(label)}</span>" for label in labels)
     article_html = markdown.markdown(
         render_issue_body(issue, comments),
         output_format="html5",
@@ -194,7 +195,7 @@ def render_static_issue(owner, repo, issue, comments):
     reading_assets_prefix = "../../site-overrides/static"
 
     return f"""<!doctype html>
-<html lang="zh-CN">
+<html lang="zh-CN" data-theme="dark">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -207,6 +208,7 @@ def render_static_issue(owner, repo, issue, comments):
 <body>
   <div class="reading-progress" aria-hidden="true"></div>
   <header class="site-header">
+    <div class="shell site-header-inner">
     <a class="brand" href="{root_prefix}/">Equ</a>
     <nav class="nav" aria-label="Primary navigation">
       <a href="{root_prefix}/">首页</a>
@@ -245,6 +247,7 @@ def render_static_issue(owner, repo, issue, comments):
         <span class="sr-only theme-toggle-label">夜间</span>
       </button>
     </div>
+    </div>
   </header>
 
   <main>
@@ -278,6 +281,12 @@ def render_static_issue(owner, repo, issue, comments):
     <span>Equ's Blog</span>
     <span>Notes from GitHub Issues.</span>
   </footer>
+
+  <button class="back-top" type="button" aria-label="回到顶部" title="回到顶部">
+    <svg viewBox="0 0 24 24" focusable="false">
+      <path d="m6 14 6-6 6 6"></path>
+    </svg>
+  </button>
 </body>
 </html>
 """
@@ -352,18 +361,31 @@ def render_static_home(owner, repo, issues):
     )
 
     return f"""<!doctype html>
-<html lang="zh-CN">
+<html lang="zh-CN" data-theme="dark">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Equ's Blog</title>
   <meta name="description" content="阅读、生活、技术与一些短暂但明亮的记录">
-  <link rel="stylesheet" href="assets/css/home.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="site-overrides/static/css/equ.css">
   <link rel="alternate" type="application/atom+xml" title="Equ's Blog" href="feed.xml">
-  <script defer src="assets/js/home.js"></script>
+  <script defer src="site-overrides/static/js/equ.js"></script>
 </head>
 <body>
+  <!-- rear photo plane: complete biosphere photo below the header -->
+  <div class="depth" aria-hidden="true">
+    <div class="depth-shift">
+      <img class="depth-image" src="site-overrides/static/media/biosphere-wide.png" alt="" width="1536" height="1024" decoding="async" fetchpriority="high">
+    </div>
+  </div>
+
+  <!-- rain + distant lightning: above the photo, below the glass panels -->
+  <canvas class="rain-layer" aria-hidden="true"></canvas>
+
   <header class="site-header">
+    <div class="shell site-header-inner">
     <a class="brand" href="./">Equ</a>
     <nav class="nav" aria-label="Primary navigation">
       <a href="#latest">最近更新</a>
@@ -402,61 +424,58 @@ def render_static_home(owner, repo, issues):
         <span class="sr-only theme-toggle-label">夜间</span>
       </button>
     </div>
+    </div>
   </header>
 
   <main>
     <section class="hero">
       <div class="hero-copy">
-        <p class="eyebrow">Digital garden / notes / essays</p>
         <h1>彷佛像水面泡沫的短暂光亮</h1>
+        <span class="hero-divider" aria-hidden="true"></span>
         <p class="hero-text">这里有小马的阅读、生活、技术和日常观察，以及曾经我们种植的蜀葵。</p>
-        <div class="hero-actions">
-          <a class="button button-primary" href="#latest">阅读最近更新</a>
-          <a class="button" href="https://github.com/{html.escape(owner)}/{html.escape(repo)}/issues">浏览 Issues</a>
-        </div>
       </div>
-      <aside class="hero-panel" aria-label="Blog summary">
-        <span class="panel-kicker">Archive</span>
-        <strong>{len(visible_issues)}</strong>
-        <span>篇公开记录</span>
-        <div class="theme-list">
-          <span>阅读</span>
-          <span>生活</span>
-          <span>技术</span>
-          <span>花园</span>
-        </div>
-      </aside>
     </section>
 
-    <section class="section-block" id="latest">
-      <div class="section-heading">
-        <p>Latest</p>
-      </div>
-      <div class="post-tools" aria-label="文章搜索">
-        <label class="search-field">
-          <span class="sr-only">搜索文章</span>
-          <input class="blog-search-input" type="search" placeholder="搜索文章、标签或关键词" autocomplete="off">
-        </label>
-        <button class="search-clear" type="button" hidden>清除</button>
-      </div>
-      <div class="post-groups">
+    <div class="shell content-stack">
+      <section class="section-block" id="latest">
+        <div class="archive-toolbar">
+          <p class="archive-label">Archive</p>
+          <div class="post-tools" aria-label="文章搜索">
+            <label class="search-field">
+              <span class="sr-only">搜索文章</span>
+              <input class="blog-search-input" type="search" placeholder="搜索文章、标签或关键词" autocomplete="off">
+              <kbd class="search-kbd" aria-hidden="true">/</kbd>
+            </label>
+            <button class="search-clear" type="button" hidden>清除</button>
+          </div>
+        </div>
+        <div class="post-groups">
 {groups_html}
-      </div>
-      <p class="search-empty" hidden>没有找到匹配的文章。</p>
-    </section>
+        </div>
+        <p class="search-empty" hidden>没有找到匹配的文章。</p>
+      </section>
 
-    <section class="section-block about-block" id="about">
-      <div class="section-heading">
-        <p>About</p>
-      </div>
+      <section class="section-block about-block" id="about">
+        <div class="section-heading section-heading-solo">
+          <p>About</p>
+        </div>
+        <div class="about-body">
 {about_html}
-    </section>
+        </div>
+      </section>
+    </div>
   </main>
 
   <footer class="site-footer">
     <span>Equ's Blog</span>
     <span>Notes from GitHub Issues.</span>
   </footer>
+
+  <button class="back-top" type="button" aria-label="回到顶部" title="回到顶部">
+    <svg viewBox="0 0 24 24" focusable="false">
+      <path d="m6 14 6-6 6 6"></path>
+    </svg>
+  </button>
 </body>
 </html>
 """
