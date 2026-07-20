@@ -1576,6 +1576,16 @@ main {
     gap: var(--space-3);
   }
 
+  /* keep the 12-character hero title on a single line on phones:
+     fluid size derived from (100vw - 40px padding) / ~12.4em */
+  .hero h1 {
+    max-width: none;
+    font-size: clamp(17px, 7.6vw - 3.5px, 28px);
+    letter-spacing: 0.03em;
+    white-space: nowrap;
+    text-wrap: unset;
+  }
+
   .post-card {
     grid-template-columns: 1fr;
     gap: 2px;
